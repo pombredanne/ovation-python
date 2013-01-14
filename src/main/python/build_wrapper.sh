@@ -1,6 +1,6 @@
 #!/bin/bash
 
-M2_REPO=/Users/barry/.m2/repository/
+M2_REPO=$1
 
 python -m jcc.__main__ \
 --arch x86_64 \
@@ -8,7 +8,6 @@ python -m jcc.__main__ \
 --version 2.0.0  \
 --python ovation \
 --build \
---install \
 --files separate \
 --jar $M2_REPO/us/physion/ovation-core/2.0-SNAPSHOT/ovation-core-2.0-SNAPSHOT.jar \
 --jar $M2_REPO/joda-time/joda-time/2.1/joda-time-2.1.jar \
