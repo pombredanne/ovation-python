@@ -8,6 +8,7 @@ python -m jcc.__main__ \
 --version 2.0.0  \
 --python ovation \
 --build \
+--bdist \
 --files separate \
 --jar $M2_REPO/us/physion/ovation-core/2.0-SNAPSHOT/ovation-core-2.0-SNAPSHOT.jar \
 --jar $M2_REPO/joda-time/joda-time/2.1/joda-time-2.1.jar \
