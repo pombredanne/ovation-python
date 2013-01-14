@@ -1,11 +1,12 @@
 #!/bin/bash
 
 M2_REPO=$1
+VERSION=$2
 
 python -m jcc.__main__ \
 --arch x86_64 \
 --shared \
---version 2.0.0  \
+--version $VERSION  \
 --python ovation \
 --build \
 --bdist \
