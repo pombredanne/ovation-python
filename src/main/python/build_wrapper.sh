@@ -3,6 +3,11 @@
 M2_REPO=$1
 VERSION=$2
 
+virtualenv --no-site-packages --distribute wrapper.build.venv
+source wrapper.build.venv/bin/activate
+
+easy_install jcc
+
 python -m jcc.__main__ \
 --arch x86_64 \
 --shared \
@@ -34,5 +39,9 @@ us.physion.ovation.values.Resource=OVResource \
 --exclude us.physion.ovation.domain.impl.OwnedEntityBase \
 --exclude us.physion.ovation.domain.impl.AnnotatableEntityBase \
 --exclude us.physion.ovation.domain.impl.Experiment
+
+deactivate
+
+rm -rf wrapper.build.venv
 
 # rename org.apache.commons.lang.enums.Enum=CLEnum 
