@@ -3,10 +3,10 @@
 M2_REPO=$1
 VERSION=$2
 
-virtualenv --no-site-packages --distribute wrapper.build.venv
+virtualenv --distribute wrapper.build.venv
 source wrapper.build.venv/bin/activate
 
-easy_install jcc
+pip install jcc
 
 python -m jcc.__main__ \
 --arch x86_64 \
