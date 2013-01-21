@@ -17,6 +17,7 @@ python -m jcc.__main__ \
 --bdist \
 --files separate \
 --jar $M2_REPO/us/physion/ovation-core/2.0-SNAPSHOT/ovation-core-2.0-SNAPSHOT.jar \
+--jar $M2_REPO/us/physion/ovation-api/2.0-SNAPSHOT/ovation-api-2.0-SNAPSHOT.jar \
 --jar $M2_REPO/joda-time/joda-time/2.1/joda-time-2.1.jar \
 --package java.lang \
 --package java.util \
