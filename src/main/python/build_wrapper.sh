@@ -3,7 +3,7 @@
 M2_REPO=$1
 VERSION=$2
 
-virtualenv --distribute wrapper.build.venv
+/usr/bin/env virtualenv --distribute wrapper.build.venv
 source wrapper.build.venv/bin/activate
 
 pip install jcc
