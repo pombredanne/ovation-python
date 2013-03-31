@@ -4,6 +4,8 @@ import sys
 import subprocess
 from dependencies import dependency_list, jar_list, include_list
 
+EXCLUDES = []
+
 # TODO generate these from excluded domain classes, and package prefixes
 RENAMES = [
     'us.physion.ovation.util.Types',
@@ -84,9 +86,9 @@ def main(argv=sys.argv):
         args.append("--include")
         args.append(j)
         
-    # for c in EXCLUDES:
-    #     args.append("--exclude")
-    #     args.append(c)
+    for c in EXCLUDES:
+        args.append("--exclude")
+        args.append(c)
         
     renames = dict(((c, '_' + c.replace('.','_')) for c in RENAMES))
     args.append("--rename")
@@ -96,9 +98,8 @@ def main(argv=sys.argv):
     
     print("GENERATING WRAPPER...")
     
-    print " ".join(args)
-    
-    subprocess.check_call(args, stderr=subprocess.STDOUT, stdout=subprocess.STDOUT)
+    #print " ".join(args)
+    subprocess.check_call(args)
     
 
 if __name__ == '__main__':
