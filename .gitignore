@@ -39,3 +39,5 @@ nosetests.xml
 .project
 .pydevproject
 
+
+maven.classpath.txt
