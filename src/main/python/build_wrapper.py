@@ -88,7 +88,7 @@ def main(argv=sys.argv):
     #     args.append("--exclude")
     #     args.append(c)
         
-    renames = dict(((c, c.replace('.','_')) for c in RENAMES))
+    renames = dict(((c, '_' + c.replace('.','_')) for c in RENAMES))
     args.append("--rename")
     rename_entries = ["{0}={1}".format(k,v) for (k,v) in renames.iteritems()]
     args.append(",".join(rename_entries))
