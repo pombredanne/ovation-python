@@ -31,7 +31,6 @@
 							<executable>src/main/python/build_wrapper.sh</executable>
 							<workingDirectory>${project.build.directory}/python</workingDirectory>
 							<arguments>
-								<argument>${settings.localRepository}</argument>
 								<argument>${project.version}</argument>
 							</arguments>    
 							<environmentVariables>

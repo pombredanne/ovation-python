@@ -11,7 +11,7 @@ def dependency_list(pom_path='pom.xml'):
     output_path = "maven.classpath.txt"
     subprocess.check_call(["mvn", "-f", pom_path, "dependency:build-classpath", "-Dmdep.outputFile={0}".format(output_path)])
     
-    with open(output_path) as f:
+    with open(os.path.join("../../", output_path)) as f:
         classpath = f.read()
     
     return classpath.split(os.pathsep)

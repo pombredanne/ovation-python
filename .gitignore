@@ -41,3 +41,5 @@ nosetests.xml
 
 
 maven.classpath.txt
+
+wrapper.build.venv/
