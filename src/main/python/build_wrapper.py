@@ -4,14 +4,10 @@ import sys
 import subprocess
 from dependencies import dependency_list, jar_list, include_list
 
-RENAMES = { "us.physion.ovation.util.Types" : "OVTypes"
-              }
-              
-
-EXCLUDES = [
+# TODO generate these from excluded domain classes, and package prefixes
+RENAMES = [
+    'us.physion.ovation.util.Types',
     'us.physion.ovation.values.impl.Resource',
-    
-    # TODO generate these from excluded domain classes, and package prefixes
     'us.physion.ovation.domain.impl.Project',
     'us.physion.ovation.domain.impl.User',
     'us.physion.ovation.domain.impl.Group',
@@ -28,7 +24,7 @@ EXCLUDES = [
     'us.physion.ovation.domain.impl.AnnotatableEntityBase',
     'us.physion.ovation.domain.impl.ProcedureEntityBase',
     'us.physion.ovation.domain.impl.TimelineEntityBase',
-    
+    'us.physion.ovation.domain.impl.AnalysisRecord',
     'us.physion.ovation.domain.dto.EpochGroup',
     'us.physion.ovation.domain.dto.Project',
     'us.physion.ovation.domain.dto.Group',
@@ -44,7 +40,6 @@ EXCLUDES = [
     'us.physion.ovation.domain.dto.AnnotatableEntityBase',
     'us.physion.ovation.domain.dto.TimelineEntityBase',
     'us.physion.ovation.domain.dto.AnalysisRecord',
-    
     'us.physion.ovation.couch.dto.EpochGroup',
     'us.physion.ovation.couch.dto.Project',
     'us.physion.ovation.couch.dto.Group',
@@ -61,6 +56,7 @@ EXCLUDES = [
     'us.physion.ovation.couch.dto.AnnotatableEntityBase',
     'us.physion.ovation.couch.dto.TimelineEntityBase',
     'us.physion.ovation.couch.dto.AnalysisRecord',
+    'us.physion.ovation.couch.dto.ObjectivityPlacement',
 ]
 
 def main(argv=sys.argv):
@@ -88,12 +84,13 @@ def main(argv=sys.argv):
         args.append("--include")
         args.append(j)
         
-    for c in EXCLUDES:
-        args.append("--exclude")
-        args.append(c)
+    # for c in EXCLUDES:
+    #     args.append("--exclude")
+    #     args.append(c)
         
+    renames = dict(((c, c.replace('.','_')) for c in RENAMES))
     args.append("--rename")
-    rename_entries = ["{0}={1}".format(k,v) for (k,v) in RENAMES.iteritems()]
+    rename_entries = ["{0}={1}".format(k,v) for (k,v) in renames.iteritems()]
     args.append(",".join(rename_entries))
     
     
