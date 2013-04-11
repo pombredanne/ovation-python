@@ -27,6 +27,7 @@ RENAMES = [
     'us.physion.ovation.domain.impl.ProcedureEntityBase',
     'us.physion.ovation.domain.impl.TimelineEntityBase',
     'us.physion.ovation.domain.impl.AnalysisRecord',
+    'us.physion.ovation.domain.impl.NumericMeasurement',
     'us.physion.ovation.domain.dto.EpochGroup',
     'us.physion.ovation.domain.dto.Project',
     'us.physion.ovation.domain.dto.Group',
@@ -59,6 +60,7 @@ RENAMES = [
     'us.physion.ovation.couch.dto.TimelineEntityBase',
     'us.physion.ovation.couch.dto.AnalysisRecord',
     'us.physion.ovation.couch.dto.ObjectivityPlacement',
+    'us.physion.ovation.couch.dto.NumericMeasurement',
 ]
 
 def main(argv=sys.argv):
