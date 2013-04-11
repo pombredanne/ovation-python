@@ -3,11 +3,11 @@
 VERSION=$1
 
 # On python 3
-if hash pyvenv 2>/dev/null; then
-	pyenv wrapper.build.env
-else
+# if hash pyvenv 2>/dev/null; then
+# 	pyenv wrapper.build.env
+# else
     /usr/local/bin/virtualenv --distribute wrapper.build.venv
-fi
+# fi
 
 source wrapper.build.venv/bin/activate
 
