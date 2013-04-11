@@ -80,7 +80,10 @@ def main(argv=sys.argv):
             "java.util.HashMap",
             "java.util.HashSet",
             "com.google.common.collect.Maps",
-            "com.google.common.collect.Sets"]
+            "com.google.common.collect.Sets",
+            "--package", "us.physion.ovation.domain.mixin",
+            "us.physion.ovation.domain.mixin.Taggable",
+            "us.physion.ovation.domain.mixin.PropertyAnnotatable"]
     
     deps = dependency_list(pom)
 
