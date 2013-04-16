@@ -46,6 +46,32 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	<repositories>
+		<repository>
+			<id>s3-release-repository</id>
+			<name>S3 Release Repository</name>
+			<url>s3://us.physion.maven/release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>s3-snapshot-repository</id>
+			<name>S3 Snapshot Repository</name>
+			<url>s3://us.physion.maven/snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>us.physion</groupId>
