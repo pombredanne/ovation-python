@@ -9,7 +9,7 @@ import unittest
     
 def dependency_list(pom_path='pom.xml', mvn_opts=""):
     output_path = "maven.classpath.txt"
-    subprocess.check_call(["mvn", "-f", pom_path, mvn_opts + " dependency:build-classpath", "-Dmdep.outputFile={0}".format(output_path)])
+    subprocess.check_call(["mvn", "-f", pom_path, mvn_opts, "dependency:build-classpath", "-Dmdep.outputFile={0}".format(output_path)])
     
     with open(os.path.join("../../", output_path)) as f:
         classpath = f.read()
