@@ -14,7 +14,7 @@ source wrapper.build.venv/bin/activate
 
 pip install jcc
 
-python "../../src/main/python/build_wrapper.py" "$VERSION" "../../pom.xml"
+python "../../src/main/python/build_wrapper.py" "$VERSION" "../../pom.xml" "-Pjenkins"
 
 deactivate
 

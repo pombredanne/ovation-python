@@ -67,6 +67,7 @@ def main(argv=sys.argv):
     
     version = argv[1]
     pom = argv[2]
+    mvn_opts = argv[3]
     
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
@@ -85,7 +86,7 @@ def main(argv=sys.argv):
             "us.physion.ovation.domain.mixin.Taggable",
             "us.physion.ovation.domain.mixin.PropertyAnnotatable"]
     
-    deps = dependency_list(pom)
+    deps = dependency_list(pom, mvn_opts=mvn_opts)
 
     for j in jar_list(deps):
         args.append("--jar")
