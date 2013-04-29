@@ -2,6 +2,8 @@
 
 import sys
 import subprocess
+import shutil
+import os.path
 from dependencies import dependency_list, jar_list, include_list
 
 EXCLUDES = []
@@ -63,11 +65,19 @@ RENAMES = [
     'us.physion.ovation.couch.dto.NumericMeasurement',
 ]
 
+MODULES = [ "connection.py" ]
+
+
 def main(argv=sys.argv):
     
     version = argv[1]
     pom = argv[2]
     mvn_opts = argv[3]
+    
+    #Copy modules to build directory
+    for m in MODULES:
+        print("Copying " + m + " to build directory...")
+        shutil.copy(os.path.join("../../src/main/python", m), m)
     
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
@@ -78,6 +88,7 @@ def main(argv=sys.argv):
             "--files", "separate",
             "--package", "java.lang",
             "--package", "java.util",
+            "--module", "connection.py" #"../../src/main/python/connection.py"
             "java.util.HashMap",
             "java.util.HashSet",
             "com.google.common.collect.Maps",
@@ -108,7 +119,22 @@ def main(argv=sys.argv):
     
     print("GENERATING WRAPPER...")
     
-    subprocess.check_call(args)
+    print(' ')
+    print(' '.join(args))
+    print(' ')
+    print(' ')
+    
+    try:
+        subprocess.check_call(args)
+    except subprocess.CalledProcessError, ex:
+        indent = "\t"
+        if ex.output is not None:
+            print(indent + "jcc output:")
+            for l in ex.output.splitlines(True):
+                print(indent*2 + l)
+        
+        raise
+        
     
 
 if __name__ == '__main__':
