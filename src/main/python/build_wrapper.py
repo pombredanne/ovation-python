@@ -65,7 +65,7 @@ RENAMES = [
     'us.physion.ovation.couch.dto.NumericMeasurement',
 ]
 
-MODULES = [ "connection.py" ]
+MODULES = [ "connection.py", "numpy.py" ]
 
 
 def main(argv=sys.argv):
