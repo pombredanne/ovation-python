@@ -29,7 +29,7 @@
 				<executions>
 					<execution>
 						<configuration>
-							<executable>src/main/bin/build_wrapper.sh</executable>
+							<executable>../../src/main/bin/build_wrapper.sh</executable>
 							<workingDirectory>${project.build.directory}/python</workingDirectory>
 							<arguments>
 								<argument>${project.version}</argument>
