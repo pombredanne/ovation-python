@@ -88,5 +88,12 @@
 			<artifactId>ovation-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>us.physion</groupId>
+			<artifactId>ovation-test-utils</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
 	</dependencies>
 </project>

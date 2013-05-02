@@ -88,7 +88,6 @@ def main(argv=sys.argv):
             "--files", "separate",
             "--package", "java.lang",
             "--package", "java.util",
-            "--module", "connection.py" #"../../src/main/python/connection.py"
             "java.util.HashMap",
             "java.util.HashSet",
             "com.google.common.collect.Maps",
@@ -96,6 +95,10 @@ def main(argv=sys.argv):
             "--package", "us.physion.ovation.domain.mixin",
             "us.physion.ovation.domain.mixin.Taggable",
             "us.physion.ovation.domain.mixin.PropertyAnnotatable"]
+
+    for m in MODULES:
+        args.append("--module")
+        args.append(m)
     
     deps = dependency_list(pom, mvn_opts=mvn_opts)
 
