@@ -1,26 +1,32 @@
 """Testing utilities for code that runs against an Ovation database"""
 
-import ovation as ov
+from ovation import TestUtils, OvationApiModule
+from contextlib import contextmanager
 
-def local_stack_dsc():
-    """Builds a local database stack and returns a DatabaseCoordinator and user credentials
+def __make_authenticated_dsc(local_stack):
+    """Builds an authenticated DataStoreCoordinator for the given LocalStack
     
+    Parameters
+    ----------
+    
+    local_stack : LocalStack
     
     Returns
     -------
-    (dsc, userIdentity, userPassword) : tuple
-        Tuple of DataStoreCoordinator instance, userIdentity (string) and userPassword (string)
+    Authenticated DataStoreCoordinator
     """
     
-    injector = LocalDatabaseStack.getInjector(OvationApiModule())
-    localDatabaseStack = injector.getInstance(LocalDatabaseStack)
+    dsc = local_stack.getDataStoreCoordinator()
+    dsc.authenticateUser(userIdentity, userPassword, False).get()
     
-    port = LocalDatabaseStack.getNamedString(injector, OvationCouchModule.COUCH_PORT)
-    host = LocalDatabaseStack.getNamedString(injector, OvationCouchModule.COUCH_HOST)
-    localCouchUserName = LocalDatabaseStack.getNamedString(injector, OvationCouchModule.COUCH_PROCESS_OWNER)
-    localCouchKeyStoreServiceName = LocalDatabaseStack.getNamedString(injector, OvationCouchModule.LOCAL_COUCH_KEY_STORE_SERVICE_NAME)
+    return dsc
+
+
+def __make_local_stack():
+    """Builds a local database stack"""
     
-    keyStore = injector.getInstance(AccountKeyStore)
+    testUtils = TestUtils(OvationApiModule())
+    stackBuilder = testUtils.getLocalDatabaseStackBuilder()
     
     userId = UUID.randomUUID();
     userIdentity = str(userId) + "@email.com"
@@ -28,16 +34,34 @@ def local_stack_dsc():
     
     databaseName = userIdentity.replace("@", "-").replace(".", "-")
     
-    localStack = localDatabaseStack.createLocalDatabaseStack(databaseName,
-                userIdentity,
-                userPassword,
-                localCouchUserName,
-                localCouchKeyStoreServiceName,
-                host,
-                port,
-                userId,
-                keyStore)
+    localStack = stackBuilder.build(databaseName, userIdentity, userPassword)
     
-    dsc = localStack.getInjector(new OvationApiModule()).getInstance(DataStoreCoordinator)
+    return localStack
+
     
-    return (dsc, userIdentity, userPassword)
+@contextmanager
+def local_stack():
+    """Context manager wrapping a local database stack. This stack uses a local, transient cloud storage endpoint and
+    a local CouchDB database in place of a normal ovation.io account database.
+    
+    This manager yields an authenticated DataStoreCoordinator for the local stack.
+    
+    Upon cleanup, the manager deletes the local database(s) associated with this stack
+    
+    Usage
+    -----
+    
+    :
+        with(local_stack()) as dsc:
+            context = dsc.getContext()
+            # ...
+    
+    """
+    
+    stack = None
+    try:
+        stack = __make_local_stack()
+        yield __make_authenticated_dsc(stack)
+    finally:
+        if stack is not None:
+            stack.cleanUp()

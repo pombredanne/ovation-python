@@ -93,6 +93,7 @@ def main(argv=sys.argv):
             "com.google.common.collect.Maps",
             "com.google.common.collect.Sets",
             "--package", "us.physion.ovation.domain.mixin",
+            "--package", "us.physion.ovation.test.util",
             "us.physion.ovation.domain.mixin.Taggable",
             "us.physion.ovation.domain.mixin.PropertyAnnotatable"]
 
