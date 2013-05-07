@@ -94,6 +94,13 @@
 			<artifactId>ovation-test-utils</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+		<!-- Remove once ovation-logging is available -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.0.7</version>
+		</dependency>
 
 	</dependencies>
 </project>
