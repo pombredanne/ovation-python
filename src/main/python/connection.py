@@ -2,10 +2,13 @@
 Connection utilities for the Ovation Python API
 """
 
+from getpass import getpass
+
 from ovation import Ovation
+# from us.physion.ovation.api import Ovation
 
 def new_data_store_coodinator(email, password=None):
-    """Creates a new authenticated DataStoreCoordinator.
+    """Creates a new authenticated DataStoreCoordinator. d
     
     Arguments
     ---------
@@ -22,7 +25,7 @@ def new_data_store_coodinator(email, password=None):
     """
     
     if password is None:
-        pw = getpass.getpass("Ovation password: ")
+        pw = getpass("Ovation password: ")
     else:
         pw = password
     

@@ -45,9 +45,10 @@ RENAMES = [
     'us.physion.ovation.domain.dto.AnnotatableEntityBase',
     'us.physion.ovation.domain.dto.TimelineEntityBase',
     'us.physion.ovation.domain.dto.AnalysisRecord',
+    'us.physion.ovation.domain.dto.NumericMeasurement',
     'us.physion.ovation.couch.dto.EpochGroup',
     'us.physion.ovation.couch.dto.Project',
-    'us.physion.ovation.couch.dto.Group',
+    'us.physion.ovation.couch.dto.Group',   
     'us.physion.ovation.couch.dto.User',
     'us.physion.ovation.couch.dto.Experiment',
     'us.physion.ovation.couch.dto.Epoch',
@@ -63,6 +64,7 @@ RENAMES = [
     'us.physion.ovation.couch.dto.AnalysisRecord',
     'us.physion.ovation.couch.dto.ObjectivityPlacement',
     'us.physion.ovation.couch.dto.NumericMeasurement',
+    'org.codehaus.jackson.map.Module'
 ]
 
 MODULES = [ "connection.py", "numpy.py", "testing.py" ]
@@ -81,21 +83,19 @@ def main(argv=sys.argv):
     
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
-            "--version", version,
+            "--version", version, # "--use_full_names", when 2.16 is live
             "--python", "ovation",
             "--build",
             "--bdist",
             "--files", "separate",
             "--package", "java.lang",
-            "--package", "java.util",
-            "java.util.HashMap",
-            "java.util.HashSet",
+            "--package", "java.util", 
+            "com.google.inject.Module",
+            "com.google.inject.Guice",
+            "com.google.inject.Injector",
             "com.google.common.collect.Maps",
             "com.google.common.collect.Sets",
-            "--package", "us.physion.ovation.domain.mixin",
-            "--package", "us.physion.ovation.test.util",
-            "us.physion.ovation.domain.mixin.Taggable",
-            "us.physion.ovation.domain.mixin.PropertyAnnotatable"]
+            ]
 
     for m in MODULES:
         args.append("--module")

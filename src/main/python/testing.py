@@ -1,9 +1,11 @@
 """Testing utilities for code that runs against an Ovation database"""
 
-from ovation import TestUtils, OvationApiModule
+from ovation import OvationApiModule, TestUtils, LocalStackBuilderFactory
+# from us.physion.ovation.api import OvationApiModule
+# from us.physion.ovation.test.util import TestUtils
 from contextlib import contextmanager
 
-def __make_authenticated_dsc(local_stack):
+def __make_authenticated_dsc(local_stack, userIdentity, userPassword):
     """Builds an authenticated DataStoreCoordinator for the given LocalStack
     
     Parameters
@@ -17,7 +19,7 @@ def __make_authenticated_dsc(local_stack):
     """
     
     dsc = local_stack.getDataStoreCoordinator()
-    dsc.authenticateUser(userIdentity, userPassword, False).get()
+    dsc.authenticateUser(userIdentity, JArray('char')(userPassword), False).get()
     
     return dsc
 
@@ -25,18 +27,18 @@ def __make_authenticated_dsc(local_stack):
 def __make_local_stack():
     """Builds a local database stack"""
     
-    testUtils = TestUtils(OvationApiModule())
-    stackBuilder = testUtils.getLocalDatabaseStackBuilder()
+    testUtils = TestUtils()
+    stackBuilder = testUtils.createStackBuilder(OvationApiModule())
     
     userId = UUID.randomUUID();
-    userIdentity = str(userId) + "@email.com"
-    userPassword = "password"
+    userIdentity = unicode(str(userId) + "@email.com")
+    userPassword = u"password"
     
     databaseName = userIdentity.replace("@", "-").replace(".", "-")
     
-    localStack = stackBuilder.build(databaseName, userIdentity, userPassword)
+    localStack = stackBuilder.build(databaseName, userIdentity, JArray('char')(userPassword))
     
-    return localStack
+    return (localStack, userIdentity, userPassword)
 
     
 @contextmanager
@@ -60,8 +62,8 @@ def local_stack():
     
     stack = None
     try:
-        stack = __make_local_stack()
-        yield __make_authenticated_dsc(stack)
+        (stack,userIdentity,userPassword) = __make_local_stack()
+        yield __make_authenticated_dsc(stack, userIdentity, userPassword)
     finally:
         if stack is not None:
             stack.cleanUp()
