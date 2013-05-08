@@ -40,7 +40,14 @@ def __make_local_stack():
     
     return (localStack, userIdentity, userPassword)
 
+
+def make_local_stack():
+    stack,userIdentity,userPassword = __make_local_stack()
+    dsc = __make_authenticated_dsc(stac, userIdentity, userPassword)
     
+    return (stack, dsc)
+
+
 @contextmanager
 def local_stack():
     """Context manager wrapping a local database stack. This stack uses a local, transient cloud storage endpoint and
