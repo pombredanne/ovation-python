@@ -1,6 +1,7 @@
 """Testing utilities for code that runs against an Ovation database"""
 
-from ovation import OvationApiModule, TestUtils, LocalStackBuilderFactory
+import uuid
+from ovation import OvationApiModule, TestUtils
 # from us.physion.ovation.api import OvationApiModule
 # from us.physion.ovation.test.util import TestUtils
 from contextlib import contextmanager
@@ -28,22 +29,23 @@ def __make_local_stack():
     """Builds a local database stack"""
     
     testUtils = TestUtils()
-    stackBuilder = testUtils.createStackBuilder(OvationApiModule())
-    
-    userId = UUID.randomUUID();
+    userId = uuid.uuid4()
     userIdentity = unicode(str(userId) + "@email.com")
     userPassword = u"password"
     
     databaseName = userIdentity.replace("@", "-").replace(".", "-")
     
-    localStack = stackBuilder.build(databaseName, userIdentity, JArray('char')(userPassword))
+    localStack = testUtils.makeLocalStack(OvationApiModule(),
+                                            databaseName,
+                                            userIdentity,
+                                            userPassword)
     
     return (localStack, userIdentity, userPassword)
 
 
 def make_local_stack():
     stack,userIdentity,userPassword = __make_local_stack()
-    dsc = __make_authenticated_dsc(stac, userIdentity, userPassword)
+    dsc = __make_authenticated_dsc(stack, userIdentity, userPassword)
     
     return (stack, dsc)
 
