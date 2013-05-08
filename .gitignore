@@ -46,3 +46,5 @@ wrapper.build.venv/
 
 # IDEA
 .idea
+
+*.log

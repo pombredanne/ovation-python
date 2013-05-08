@@ -83,13 +83,14 @@ def main(argv=sys.argv):
     
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
-            "--version", version, # "--use_full_names", when 2.16 is live
+            "--version", version, #"--use_full_names", # when 2.16 is live
             "--python", "ovation",
             "--build",
             "--bdist",
             "--files", "separate",
             "--package", "java.lang",
             "--package", "java.util", 
+            "--package", "com.google.common.util.concurrent",
             "com.google.inject.Module",
             "com.google.inject.Guice",
             "com.google.inject.Injector",
@@ -115,10 +116,11 @@ def main(argv=sys.argv):
         args.append("--exclude")
         args.append(c)
         
-    renames = dict(((c, '_' + c.replace('.','_')) for c in RENAMES))
-    args.append("--rename")
-    rename_entries = ["{0}={1}".format(k,v) for (k,v) in renames.iteritems()]
-    args.append(",".join(rename_entries))
+    if(len(RENAMES) > 0):
+        renames = dict(((c, c.replace('.','_')) for c in RENAMES))
+        args.append("--rename")
+        rename_entries = ["{0}={1}".format(k,v) for (k,v) in renames.iteritems()]
+        args.append(",".join(rename_entries))
     
     
     print("GENERATING WRAPPER...")
