@@ -7,7 +7,7 @@ This modules provides functions for converting DataElements to and from NumPy ar
 import numpy as np
 import quantities as pq
 
-def to_ndarray(data_element):
+def array(data_element):
     """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array"""
     
     units = pq.Quantity([1], data_element.getUnits())
@@ -23,6 +23,11 @@ def to_ndarray(data_element):
         arr.sampling_rates = tuple(pq.Quantity(rate, unit) for (rate,unit) in zip(sampling_rates, sampling_rate_units))
     
     arr.labels = dimension_labels
+
+def measurement(ndarr):
+    """Converts a Quantities (NumPy) array to an Ovation NumericMeasurement"""
+    
+    pass
     
     
 def to_data_element(ndarr):
