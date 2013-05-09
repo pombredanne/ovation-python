@@ -1,7 +1,7 @@
 """Testing utilities for code that runs against an Ovation database"""
 
 import uuid
-from ovation import OvationApiModule, TestUtils
+from ovation import OvationApiModule, TestUtils, JArray
 # from us.physion.ovation.api import OvationApiModule
 # from us.physion.ovation.test.util import TestUtils
 from contextlib import contextmanager

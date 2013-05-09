@@ -17,7 +17,7 @@ def dependency_list(pom_path='pom.xml', mvn_opts=""):
     return classpath.split(os.pathsep)
     
 
-JAR_PREFIXES = ["ovation-core", "ovation-api", "ovation-logging", "joda-time"]
+JAR_PREFIXES = ["ovation-", "cloud-file-cache", "joda-time"]
 def jar_list(dependencies=[]):
 
     for f in dependencies:

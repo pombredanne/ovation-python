@@ -16,7 +16,7 @@ def array(data_element):
     sampling_rate_units = data_element.getSamplingRateUnits()
     dimension_labels = data_element.getDimensionLabels()
     
-    arr = np.reshape(np.array(data_element.getData()) * units, shape)
+    arr = np.reshape(np.array(JArray_double.cast_(data_element.getData())) * units, shape)
     if len(sampling_rate_units) == 1:
         arr.sampling_rate = pq.Quantity(sampling_rates, sampling_rate_units[0]) 
     else:
