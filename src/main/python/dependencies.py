@@ -17,7 +17,7 @@ def dependency_list(pom_path='pom.xml', mvn_opts=""):
     return classpath.split(os.pathsep)
     
 
-JAR_PREFIXES = ["ovation-", "cloud-file-cache", "joda-time"]
+JAR_PREFIXES = ["ovation-core", "ovation-api", "ovation-logging", "joda-time"]
 def jar_list(dependencies=[]):
 
     for f in dependencies:
@@ -28,7 +28,7 @@ def jar_list(dependencies=[]):
 
     
 def include_list(dependencies=[]):
-    jars = list(jar_list(dependencies))
+    jars = set(jar_list(dependencies))
     print jars
     for f in dependencies:
         if f not in jars:

@@ -12,7 +12,8 @@ Jython users can access the Ovation Java API directly and should *not* use this 
 
 * Java 1.6+
 * CPython 2.7+ or 3.3+
-* NumPy
+* NumPy 1.7+
+* Quantities 0.10+
 
 ## Technical details
 
@@ -36,10 +37,15 @@ Build requires:
 
 ## Usage
 
+This is a code block:
+
 ### Connecting to the Ovation database
 
-	>> import ovation.*
-	>> dsc = Ovation....
+	>> from ovation import *
+	>> from ovation.connection import connect
+	>> dsc = connect(<ovation.io user email>)
+	Ovation password: <ovation.io password>
+	>> context = dsc.getContext()
 
 
 
