@@ -15,9 +15,10 @@ def asarray(numeric_data):
     numeric_data : ovation.NumericData
         `NumericData` instance to convert to a `quantities` array
         
-    Return
-    ------
-    `quantities.Quantity` with additional `labels`, `sampling_rate` properties
+    Returns
+    -------
+    array : quantities.Quantity 
+        Quantity array with additional `labels`, `sampling_rate` properties
     """
     
     units = pq.Quantity([1], numeric_data.getUnits())
@@ -36,16 +37,17 @@ def asarray(numeric_data):
 
 
 def as_numeric_data(quantity):
-    """Converts a Quantities (NumPy) array to an Ovation NumericData
+    """Converts a Quantities (NumPy) array to an Ovation NumericData, copying the array data.
     
     Parameters
     ----------
     quantity : pq.Quantity
         Quantity (NumPy) array with `labels` and `sampling_rate` properties
         
-    Return
-    ------
-    `ovation.NumericData` instance copying the provided quantity
+    Returns
+    -------
+    numeric_data : ovation.NumericData
+         `ovation.NumericData` instance copying the provided quantity
     """
     
     pass

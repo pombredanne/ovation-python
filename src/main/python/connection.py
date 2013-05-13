@@ -22,9 +22,10 @@ def connect(email, password=None, logging=True):
         If true, configures Ovation logging. Logs will be placed in the default application
         support directory, `~/Library/Application Support/us.physion.ovation/logs` on OS X, etc.
     
-    Return
-    ------
-    A new authenticated DataStoreCoordinator
+    Returns
+    -------
+    dsc : ovation.DataStoreCoordinator
+        A new authenticated DataStoreCoordinator
     
     """
     
