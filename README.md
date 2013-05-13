@@ -25,7 +25,7 @@ JCC wraps each Java class in the Ovation Java API under the `ovation` python pac
 
 To build the python wrapper at the command line:
 
-	mvn compile
+	mvn clean compile
 
 Build requires:
 
@@ -35,9 +35,17 @@ Build requires:
 
 ## Installation
 
+Download the ovation-python `egg` from http://ovation.io. Install the `egg` with `easy_install`. At the command line::
+
+	$ sudo easy_install ovation-python-[PY_VERSION]-[OS].egg
+	
+where `PY_VERSION` is your Python version and `OS` is your operating system. 
+
+.. warning::
+	[OS X python + keychain]
+
 ## Usage
 
-This is a code block:
 
 ### Connecting to the Ovation database
 
@@ -46,6 +54,8 @@ This is a code block:
 	>> dsc = connect(<ovation.io user email>)
 	Ovation password: <ovation.io password>
 	>> context = dsc.getContext()
+	
+
 
 
 
