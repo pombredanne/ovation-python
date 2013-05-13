@@ -1,5 +1,5 @@
 import collections
-from nose.tools import istest, assert_equals
+#from nose.tools import istest, assert_equals
 
 from maps import to_map
 from ovation import initVM
