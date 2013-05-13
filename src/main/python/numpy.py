@@ -7,16 +7,26 @@ This modules provides functions for converting DataElements to and from NumPy ar
 import numpy as np
 import quantities as pq
 
-def array(data_element):
-    """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array"""
+def asarray(numeric_data):
+    """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array
     
-    units = pq.Quantity([1], data_element.getUnits())
-    shape = data_element.getShape()
-    sampling_rates = data_element.getSamplingRates()
-    sampling_rate_units = data_element.getSamplingRateUnits()
-    dimension_labels = data_element.getDimensionLabels()
+    Parameters
+    ----------
+    numeric_data : ovation.NumericData
+        `NumericData` instance to convert to a `quantities` array
+        
+    Return
+    ------
+    `quantities.Quantity` with additional `labels`, `sampling_rate` properties
+    """
     
-    arr = np.reshape(np.array(JArray_double.cast_(data_element.getData())) * units, shape)
+    units = pq.Quantity([1], numeric_data.getUnits())
+    shape = numeric_data.getShape()
+    sampling_rates = numeric_data.getSamplingRates()
+    sampling_rate_units = numeric_data.getSamplingRateUnits()
+    dimension_labels = numeric_data.getDimensionLabels()
+    
+    arr = np.reshape(np.array(JArray_double.cast_(numeric_data.getData())) * units, shape)
     if len(sampling_rate_units) == 1:
         arr.sampling_rate = pq.Quantity(sampling_rates, sampling_rate_units[0]) 
     else:
@@ -24,13 +34,19 @@ def array(data_element):
     
     arr.labels = dimension_labels
 
-def measurement(ndarr):
-    """Converts a Quantities (NumPy) array to an Ovation NumericMeasurement"""
+
+def as_numeric_data(quantity):
+    """Converts a Quantities (NumPy) array to an Ovation NumericData
+    
+    Parameters
+    ----------
+    quantity : pq.Quantity
+        Quantity (NumPy) array with `labels` and `sampling_rate` properties
+        
+    Return
+    ------
+    `ovation.NumericData` instance copying the provided quantity
+    """
     
     pass
     
-    
-def to_data_element(ndarr):
-    """Converts a Quantities (NumPy) array to an Ovation DataElement"""
-    
-    pass
