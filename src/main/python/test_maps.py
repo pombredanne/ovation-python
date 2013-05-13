@@ -1,9 +1,8 @@
 import collections
 from nose.tools import istest, assert_equals
 
-from wrapper import to_map, to_dict
 from ovation import initVM, Maps, Map, Integer
-
+from conversion import to_map, to_dict
 
 def setup_module():
     initVM()
@@ -21,6 +20,7 @@ def to_dict_should_convert_flat_map():
     
 @istest
 def to_map_should_convert_flat_dict():
+    
     d = {   'key1' : 'value1',
             'key2' : 2,
             3 : 'value3',
