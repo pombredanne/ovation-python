@@ -15,10 +15,10 @@ def connect(email, password=None, logging=True):
     email : string
         Ovation.io account email
     
-    password : string [optional]
+    password : string, optional
         Ovation.io account passowrd. If ommited, the password will be prompted at the command prompt
         
-    logging : boolean [optional]
+    logging : boolean, optional
         If true, configures Ovation logging. Logs will be placed in the default application
         support directory, `~/Library/Application Support/us.physion.ovation/logs` on OS X, etc.
     
