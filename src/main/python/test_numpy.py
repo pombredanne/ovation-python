@@ -3,13 +3,53 @@ import quantities as pq
 
 from nose.tools import istest, assert_equals
 
-from numpy import asarray, as_numeric_data
+from conversion import asarray, as_numeric_data
+
+from ovation import *
+
+def setup_module():
+    initVM()
+
+
+def _round_trip():
+    expected = np.random.randn(10) * pq.s
+    expected.name = u'name'
+    expected.sampling_rate = 1 * pq.Hz
+    actual = asarray(as_numeric_data(expected).getData())
+
+    return (expected,actual)
 
 @istest
 def should_round_trip_1D_floating_point():
-    
-    expected = np.random.randn(10) * pq.s
-    expected.labels = 'volts'
-    actual = asarray(as_numeric_data(expected))
-    
-    assert_equals(expected, actual)
+    (expected,actual) = _round_trip()
+    assert np.all(expected == actual)
+
+@istest
+def should_round_trip_labels():
+    (expected,actual) = _round_trip()
+    assert_equals(expected.name, actual.labels[0])
+
+@istest
+def should_round_trip_sampling_rate():
+    (expected,actual) = _round_trip()
+    assert_equals(expected.sampling_rate, actual.sampling_rate)
+
+@istest
+def should_round_trip_units():
+    (expected,actual) = _round_trip()
+    assert_equals(expected.units, actual.units)
+
+@istest
+def should_round_trip_name():
+    (expected,actual) = _round_trip()
+    assert_equals(expected.name, actual.name)
+
+@istest
+def should_round_trip_2D_floating_point():
+    expected = np.random.randn(10,10) * pq.s
+    expected.labels = [u'volts', u'other']
+    expected.name = u'name'
+    expected.sampling_rate = 1 * pq.Hz
+    actual = asarray(as_numeric_data(expected).getData())
+
+    assert np.all(np.all(expected == actual))
