@@ -7,12 +7,14 @@ This modules provides functions for converting DataElements to and from NumPy ar
 import numpy as np
 import quantities as pq
 
+from ovation import *
+
 def asarray(numeric_data):
     """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array
     
     Parameters
     ----------
-    numeric_data : ovation.NumericData
+    numeric_data : ovation.NumericData.Data
         `NumericData` instance to convert to a `quantities` array
         
     Returns
@@ -50,5 +52,38 @@ def as_numeric_data(quantity):
          `ovation.NumericData` instance copying the provided quantity
     """
     
-    pass
+    dtype_to_java = {
+        np.float32 :    JArray_double,
+        np.float64 :    JArray_double,
+        np.int32 :      JArray_int
+    }
+    
+    result = NumericData()
+    if a.ndim == 1:
+        data = dtype_to_java[a.dtype.type](np.asarray(a).tolist())
+        result.addData(quantity.name, 
+                        data,
+                        a.dimensionality.unicode,
+                        float(a.sampling_rate),
+                        a.sampling_rate.dimensionality.unicode)
+    elif a.ndim == 2:
+        data = JArray_object([dtype_to_java[a.dtype.type](r) for r in np.asarray(a).tolist()])
+        try:
+            dimension_labels = quantity.labels
+        except AttributeError:
+            dimension_lablels = ["", ""]
+        
+        result.addData(quantity.name,
+                        data,
+                        dimension_labels,
+                        a.dimensionality.unicode,
+                        float(a.sampling_rate),
+                        [a.sampling_rate.dimensionality.unicode for i in xrange(a.ndim)]
+                        )
+    else:
+        raise NotImplementedError("NumericData does not support rank-" + str(a.ndim) +" arrays")
+        
+    return result
+    
+    
     

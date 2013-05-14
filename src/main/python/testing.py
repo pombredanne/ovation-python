@@ -76,3 +76,27 @@ def local_stack():
     finally:
         if stack is not None:
             stack.cleanUp()
+            
+            
+            
+class TestBase(object):
+    @classmethod
+    def setup_class(cls):
+        print("Initializing VM...")
+        initVM()
+
+        print("Creating local database stack...")
+        (cls.local_stack, cls.dsc) = make_local_stack()
+
+
+    @classmethod
+    def teardown_class(cls):
+        print("Removing local database stack...")
+        cls.local_stack.cleanUp()
+
+    def get_dsc(self):
+        return self.__class__.dsc
+
+
+
+
