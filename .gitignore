@@ -47,3 +47,5 @@ wrapper.build.venv/
 .idea
 
 *.log
+
+*.gz
