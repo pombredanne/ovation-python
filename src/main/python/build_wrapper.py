@@ -67,7 +67,7 @@ RENAMES = [
     'org.codehaus.jackson.map.Module'
 ]
 
-MODULES = [ "connection.py", "numpy.py", "testing.py", "wrapper.py", "conversion.py" ]
+MODULES = [ "connection.py", "testing.py", "wrapper.py", "conversion.py" ]
 
 
 def main(argv=sys.argv):
