@@ -67,7 +67,7 @@ RENAMES = [
     'org.codehaus.jackson.map.Module'
 ]
 
-MODULES = [ "connection.py", "testing.py", "wrapper.py", "conversion.py" ]
+#MODULES = [ "connection.py", "testing.py", "wrapper.py", "conversion.py" ]
 
 
 def main(argv=sys.argv):
@@ -77,14 +77,15 @@ def main(argv=sys.argv):
     mvn_opts = argv[3]
     
     #Copy modules to build directory
-    for m in MODULES:
-        print("Copying " + m + " to build directory...")
-        shutil.copy(os.path.join("../../src/main/python", m), m)
+    # for m in MODULES:
+    #     print("Copying " + m + " to build directory...")
+    #     shutil.copy(os.path.join("../../src/main/python", m), m)
     
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
-            "--version", version, #"--use_full_names", # when 2.16 is live
-            "--python", "ovation",
+            "--version", version, 
+            "--use_full_names", # when 2.16 is live
+            #"--python", "ovation-api",
             "--build",
             "--bdist",
             "--files", "separate",
@@ -103,9 +104,9 @@ def main(argv=sys.argv):
             "com.google.common.collect.Sets",
             ]
 
-    for m in MODULES:
-        args.append("--module")
-        args.append(m)
+    # for m in MODULES:
+    #     args.append("--module")
+    #     args.append(m)
     
     deps = dependency_list(pom, mvn_opts=mvn_opts)
 
