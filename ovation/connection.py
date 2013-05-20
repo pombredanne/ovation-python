@@ -4,9 +4,8 @@ Connection utilities for the Ovation Python API
 
 from getpass import getpass
 
-from ovation import Ovation, Logging, initVM
-
-# from us.physion.ovation.api import Ovation
+from ovation.api import Ovation
+from ovation.logging import Logging
 
 def connect(email, password=None, logging=True):
     """Creates a new authenticated DataStoreCoordinator. d
@@ -29,8 +28,6 @@ def connect(email, password=None, logging=True):
         A new authenticated DataStoreCoordinator
     
     """
-    
-    initVM()
     
     if logging:
         Logging.configureRootLoggerRollingAppender()

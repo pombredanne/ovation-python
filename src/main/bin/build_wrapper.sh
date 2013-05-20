@@ -16,7 +16,7 @@ if [[ -z $NO_VENV ]] ; then
 	pip install jcc
 fi
 
-python "../../src/main/python/build_wrapper.py" "$VERSION" ../../pom.xml "-Pjenkins"
+python "../../src/main/bin/build_wrapper.py" "$VERSION" ../../pom.xml "-Pjenkins"
 
 
 if [[ -z $NO_VENV ]] ; then
