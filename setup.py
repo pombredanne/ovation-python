@@ -9,6 +9,6 @@ setup(name='Ovation',
       author='Physion',
       author_email='info@ovation.io',
       url='http://ovation.io',
-      packages=['ovation'],
+      packages=['ovation', 'ovation.api', 'ovation.core', 'ovation.logging', 'ovation.test', 'ovation.test.util'],
       #install_requires=["ovation_api >= {version}".format(version=VERSION)]
-     )
+)

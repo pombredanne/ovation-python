@@ -1,12 +1,12 @@
 """Testing utilities for code that runs against an Ovation database"""
 
 import uuid
-import ovation
+from contextlib import contextmanager
+
 from ovation import JArray
 from ovation.api import OvationApiModule
-from ovation.testing import TestUtils
+from ovation.test.util import TestUtils
 
-from contextlib import contextmanager
 
 def __make_authenticated_dsc(local_stack, userIdentity, userPassword):
     """Builds an authenticated DataStoreCoordinator for the given LocalStack
@@ -20,35 +20,35 @@ def __make_authenticated_dsc(local_stack, userIdentity, userPassword):
     -------
     Authenticated DataStoreCoordinator
     """
-    
+
     dsc = local_stack.getDataStoreCoordinator()
     dsc.authenticateUser(userIdentity, JArray('char')(userPassword), False).get()
-    
+
     return dsc
 
 
 def __make_local_stack():
     """Builds a local database stack"""
-    
+
     testUtils = TestUtils()
     userId = uuid.uuid4()
     userIdentity = unicode(str(userId) + "@email.com")
     userPassword = u"password"
-    
+
     databaseName = userIdentity.replace("@", "-").replace(".", "-")
-    
+
     localStack = testUtils.makeLocalStack(OvationApiModule(),
-                                            databaseName,
-                                            userIdentity,
-                                            userPassword)
-    
+                                          databaseName,
+                                          userIdentity,
+                                          userPassword)
+
     return (localStack, userIdentity, userPassword)
 
 
 def make_local_stack():
-    stack,userIdentity,userPassword = __make_local_stack()
+    stack, userIdentity, userPassword = __make_local_stack()
     dsc = __make_authenticated_dsc(stack, userIdentity, userPassword)
-    
+
     return (stack, dsc)
 
 
@@ -70,17 +70,16 @@ def local_stack():
             # ...
     
     """
-    
+
     stack = None
     try:
-        (stack,userIdentity,userPassword) = __make_local_stack()
+        (stack, userIdentity, userPassword) = __make_local_stack()
         yield __make_authenticated_dsc(stack, userIdentity, userPassword)
     finally:
         if stack is not None:
             stack.cleanUp()
-            
-            
-            
+
+
 class TestBase(object):
     @classmethod
     def setup_class(cls):
