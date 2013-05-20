@@ -6,7 +6,7 @@ import quantities as pq
 
 from scipy.io import netcdf
 
-import ovation
+from ovation import *
 from ovation.core import *
 
 def asarray(numeric_data):

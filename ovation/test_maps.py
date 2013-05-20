@@ -1,7 +1,7 @@
 import collections
 from nose.tools import istest, assert_equals
 
-from ovation import Maps, Map, Integer
+from ovation import *
 from conversion import to_map, to_dict
 
 @istest

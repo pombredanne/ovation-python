@@ -1,4 +1,4 @@
-from ovation_api import initVM, JArray
+from ovation_api import *
 
 from com.google.common.collect import *
 from java.util import *
