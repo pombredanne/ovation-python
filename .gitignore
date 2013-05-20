@@ -49,3 +49,5 @@ wrapper.build.venv/
 *.log
 
 *.gz
+
+setup.cfg
