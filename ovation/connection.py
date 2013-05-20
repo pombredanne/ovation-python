@@ -4,6 +4,7 @@ Connection utilities for the Ovation Python API
 
 from getpass import getpass
 
+import ovation
 from ovation.api import Ovation
 from ovation.logging import Logging
 

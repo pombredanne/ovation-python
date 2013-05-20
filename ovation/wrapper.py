@@ -1,4 +1,4 @@
-
+import ovation
 from ovation.core import Taggable, PropertyAnnotatable, ResourceContainer
 
 def taggable(entity):

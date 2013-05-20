@@ -1,9 +1,10 @@
 """Testing utilities for code that runs against an Ovation database"""
 
 import uuid
+import ovation
+from ovation import JArray
 from ovation.api import OvationApiModule
 from ovation.testing import TestUtils
-from ovation import JArray
 
 from contextlib import contextmanager
 

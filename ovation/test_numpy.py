@@ -5,6 +5,7 @@ from nose.tools import istest, assert_equals
 
 from conversion import asarray, as_numeric_data
 
+import ovation
 from ovation.core import *
 
 def _round_trip():
