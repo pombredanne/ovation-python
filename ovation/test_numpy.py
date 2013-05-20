@@ -5,11 +5,7 @@ from nose.tools import istest, assert_equals
 
 from conversion import asarray, as_numeric_data
 
-from ovation import *
-
-def setup_module():
-    initVM()
-
+from ovation.core import *
 
 def _round_trip():
     expected = np.random.randn(10) * pq.s

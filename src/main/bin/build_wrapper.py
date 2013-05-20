@@ -8,67 +8,6 @@ from dependencies import dependency_list, jar_list, include_list
 
 EXCLUDES = []
 
-# TODO generate these from excluded domain classes, and package prefixes
-RENAMES = [
-    'us.physion.ovation.util.Types',
-    'us.physion.ovation.values.impl.Resource',
-    'us.physion.ovation.domain.impl.Project',
-    'us.physion.ovation.domain.impl.User',
-    'us.physion.ovation.domain.impl.Group',
-    'us.physion.ovation.domain.impl.OwnedEntityBase',
-    'us.physion.ovation.domain.impl.AnnotatableEntityBase',
-    'us.physion.ovation.domain.impl.Experiment',
-    'us.physion.ovation.domain.impl.Epoch',
-    'us.physion.ovation.domain.impl.Protocol',
-    'us.physion.ovation.domain.impl.EpochGroup',
-    'us.physion.ovation.domain.impl.EquipmentSetup',
-    'us.physion.ovation.domain.impl.Measurement',
-    'us.physion.ovation.domain.impl.Source',
-    'us.physion.ovation.domain.impl.EntityBase',
-    'us.physion.ovation.domain.impl.AnnotatableEntityBase',
-    'us.physion.ovation.domain.impl.ProcedureEntityBase',
-    'us.physion.ovation.domain.impl.TimelineEntityBase',
-    'us.physion.ovation.domain.impl.AnalysisRecord',
-    'us.physion.ovation.domain.impl.NumericMeasurement',
-    'us.physion.ovation.domain.dto.EpochGroup',
-    'us.physion.ovation.domain.dto.Project',
-    'us.physion.ovation.domain.dto.Group',
-    'us.physion.ovation.domain.dto.User',
-    'us.physion.ovation.domain.dto.Experiment',
-    'us.physion.ovation.domain.dto.Epoch',
-    'us.physion.ovation.domain.dto.AnalysisRecord',
-    'us.physion.ovation.domain.dto.EquipmentSetup',
-    'us.physion.ovation.domain.dto.Measurement',
-    'us.physion.ovation.domain.dto.Protocol',
-    'us.physion.ovation.domain.dto.Source',
-    'us.physion.ovation.domain.dto.ProcedureEntityBase',
-    'us.physion.ovation.domain.dto.AnnotatableEntityBase',
-    'us.physion.ovation.domain.dto.TimelineEntityBase',
-    'us.physion.ovation.domain.dto.AnalysisRecord',
-    'us.physion.ovation.domain.dto.NumericMeasurement',
-    'us.physion.ovation.couch.dto.EpochGroup',
-    'us.physion.ovation.couch.dto.Project',
-    'us.physion.ovation.couch.dto.Group',   
-    'us.physion.ovation.couch.dto.User',
-    'us.physion.ovation.couch.dto.Experiment',
-    'us.physion.ovation.couch.dto.Epoch',
-    'us.physion.ovation.couch.dto.AnalysisRecord',
-    'us.physion.ovation.couch.dto.EquipmentSetup',
-    'us.physion.ovation.couch.dto.Measurement',
-    'us.physion.ovation.couch.dto.Protocol',
-    'us.physion.ovation.couch.dto.Source',
-    'us.physion.ovation.couch.dto.EntityBase',
-    'us.physion.ovation.couch.dto.ProcedureEntityBase',
-    'us.physion.ovation.couch.dto.AnnotatableEntityBase',
-    'us.physion.ovation.couch.dto.TimelineEntityBase',
-    'us.physion.ovation.couch.dto.AnalysisRecord',
-    'us.physion.ovation.couch.dto.ObjectivityPlacement',
-    'us.physion.ovation.couch.dto.NumericMeasurement',
-    'org.codehaus.jackson.map.Module'
-]
-
-#MODULES = [ "connection.py", "testing.py", "wrapper.py", "conversion.py" ]
-
 
 def main(argv=sys.argv):
     
@@ -76,19 +15,13 @@ def main(argv=sys.argv):
     pom = argv[2]
     mvn_opts = argv[3]
     
-    #Copy modules to build directory
-    # for m in MODULES:
-    #     print("Copying " + m + " to build directory...")
-    #     shutil.copy(os.path.join("../../src/main/python", m), m)
-    
     args = ["python", "-m", "jcc.__main__", 
             "--arch", "x86_64", 
             "--version", version, 
-            "--use_full_names", # when 2.16 is live
-            #"--python", "ovation-api",
+            "--use_full_names", # when 2.16 is live,
+            "--python", "ovation-api",
             "--build",
-            "--bdist",
-            "--files", "separate",
+            "--bdist", #"--files", "separate",
             "--package", "java.lang",
             "--package", "java.util", 
             "--package", "java.io",
@@ -104,10 +37,6 @@ def main(argv=sys.argv):
             "com.google.common.collect.Sets",
             ]
 
-    # for m in MODULES:
-    #     args.append("--module")
-    #     args.append(m)
-    
     deps = dependency_list(pom, mvn_opts=mvn_opts)
 
     for j in jar_list(deps):
@@ -121,12 +50,6 @@ def main(argv=sys.argv):
     for c in EXCLUDES:
         args.append("--exclude")
         args.append(c)
-        
-    if(len(RENAMES) > 0):
-        renames = dict(((c, c.replace('.','_')) for c in RENAMES))
-        args.append("--rename")
-        rename_entries = ["{0}={1}".format(k,v) for (k,v) in renames.iteritems()]
-        args.append(",".join(rename_entries))
     
     
     print("GENERATING WRAPPER...")

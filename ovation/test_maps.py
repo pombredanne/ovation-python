@@ -1,11 +1,8 @@
 import collections
 from nose.tools import istest, assert_equals
 
-from ovation import initVM, Maps, Map, Integer
+from ovation import Maps, Map, Integer
 from conversion import to_map, to_dict
-
-def setup_module():
-    initVM()
 
 @istest
 def to_dict_should_convert_flat_map():

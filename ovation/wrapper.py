@@ -1,13 +1,13 @@
 
-from ovation import *
+from ovation.core import Taggable, PropertyAnnotatable, ResourceContainer
 
-def tag(entity):
+def taggable(entity):
     return Taggable.cast_(entity)
 
 
-def prop(entity):
+def property_annotatable(entity):
     return PropertyAnnotatable.cast_(entity)
     
-def rsrc(entity):
+def resource_container(entity):
     return ResourceContainer.cast_(entity)
     

@@ -5,7 +5,7 @@ import scipy as sp
 import quantities as pq
 
 from scipy.io import netcdf
-from ovation import *
+from ovation.core import *
 
 def asarray(numeric_data):
     """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array
