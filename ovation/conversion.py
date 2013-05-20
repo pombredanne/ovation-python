@@ -74,7 +74,7 @@ def as_numeric_data(arr):
         try:
             dimension_labels = arr.labels
         except AttributeError:
-            dimension_lablels = ["", ""]
+            dimension_labels = ["", ""]
 
         result.addData(arr.name,
                        data,
@@ -97,8 +97,8 @@ def create_variable(ncf, data, dtype, dimensions, **attributes):
     if (typecode, size) not in netcdf.REVERSE:
         raise ValueError("NetCDF 3 does not support type {}".format(dtype))
 
-    data = np.empty(shape_, dtype=dtype.newbyteorder("B")) #convert to big endian always for NetCDF 3
-    ncf.variables[name] = netcdf_variable(data, typecode, size, shape, dimensions, attributes=attributes)
+    data_array = np.empty(shape_, dtype=dtype.newbyteorder("B")) #convert to big endian always for NetCDF 3
+    ncf.variables[name] = netcdf_variable(data_array, typecode, size, shape, dimensions, attributes=attributes)
     return ncf.variables[name]
 
 
