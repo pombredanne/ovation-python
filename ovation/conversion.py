@@ -6,10 +6,27 @@ import quantities as pq
 from scipy.io import netcdf
 
 from ovation import JArray_double, JArray_int, JArray_object, Maps, Map, String, Object
-from ovation.core import NumericData
+from ovation.core import NumericData, NumericMeasurementUtils
+
+class NumericMeasurementException(Exception):
+    def __init__(self, message):
+        Exception.__init__(self, message)
+
+def as_data_frame(measurement):
+    if not NumericMeasurementUtils.isNumericMeasurement(measurement):
+        raise NumericMeasurementException("")
+
+    file = measurement.getData().get()
+    ncf = netcdf.netcdf_file(file.getAbsolutePath(), mode='r')
+    try:
+        pass
+    finally:
+        ncf.close()
 
 
-def asarray(numeric_data):
+
+
+def as_array(numeric_data):
     """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array
     
     Parameters

@@ -3,7 +3,7 @@ import quantities as pq
 
 from nose.tools import istest, assert_equals
 
-from conversion import asarray, as_numeric_data
+from conversion import as_array, as_numeric_data
 
 import ovation
 from ovation.core import *
@@ -12,7 +12,7 @@ def _round_trip():
     expected = np.random.randn(10) * pq.s
     expected.name = u'name'
     expected.sampling_rate = 1 * pq.Hz
-    actual = asarray(as_numeric_data(expected).getData())
+    actual = as_array(as_numeric_data(expected).getData())
 
     return (expected,actual)
 
@@ -47,6 +47,6 @@ def should_round_trip_2D_floating_point():
     expected.labels = [u'volts', u'other']
     expected.name = u'name'
     expected.sampling_rate = 1 * pq.Hz
-    actual = asarray(as_numeric_data(expected).getData())
+    actual = as_array(as_numeric_data(expected).getData())
 
     assert np.all(np.all(expected == actual))
