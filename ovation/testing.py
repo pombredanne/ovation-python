@@ -3,7 +3,7 @@
 import uuid
 from contextlib import contextmanager
 
-from ovation import JArray
+from ovation import JArray, initVM
 from ovation.api import OvationApiModule
 from ovation.test.util import TestUtils
 
