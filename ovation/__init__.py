@@ -6,5 +6,6 @@ from java.lang import *
 from java.net import URI, URL
 from org.joda.time import *
 from org.joda.time.format import DateTimeFormat
+from com.google.common.base import Optional
 
 initVM()
