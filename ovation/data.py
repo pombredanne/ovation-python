@@ -46,12 +46,8 @@ def as_data_frame(numeric_measurement):
             sampling_rate_units = element.samplingRateUnits
             dimension_labels = element.dimensionLabels
 
-            arr = ncf.variables[element.name].data * units
-
-            # if big_endian_data.dtype == big_endian_data.dtype.newbyteorder('='):
-            #     arr = big_endian_data * units
-            # else:
-            #     arr = big_endian_data.byteswap() * units
+            # NetCDF/Java replaces ' ' with '_' when naming varibles. scipy.io.netcdf seems to remove them
+            arr = ncf.variables[element.name.replace('_', ' ')].data * units
 
             arr.sampling_rates = tuple(pq.Quantity(rate, unit) for (rate, unit) in zip(sampling_rates, sampling_rate_units))
 
