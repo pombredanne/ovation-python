@@ -14,7 +14,7 @@ class NumericMeasurementException(Exception):
 
 def as_data_frame(measurement):
     if not NumericMeasurementUtils.isNumericMeasurement(measurement):
-        raise NumericMeasurementException("")
+        raise NumericMeasurementException("Attempted to convert a non-numeric measurement to Pandas DataFrame")
 
     file = measurement.getData().get()
     ncf = netcdf.netcdf_file(file.getAbsolutePath(), mode='r')
@@ -26,7 +26,7 @@ def as_data_frame(measurement):
 
 
 
-def as_array(numeric_data):
+def as_array(numeric_data, netcdf_file):
     """Converts a numeric Ovation NumericData.Data to a Quantities (NumPy) array
     
     Parameters
@@ -40,15 +40,18 @@ def as_array(numeric_data):
         Quantity array with additional `labels`, `sampling_rate` properties
     """
 
-    units = pq.Quantity([1], numeric_data.getUnits())
-    shape = numeric_data.getShape()
+    units = pq.Quantity(1, numeric_data.getUnits())
     sampling_rates = numeric_data.getSamplingRates()
     sampling_rate_units = numeric_data.getSamplingRateUnits()
     dimension_labels = numeric_data.getDimensionLabels()
 
-    arr = np.reshape(np.array(JArray_double.cast_(numeric_data.getData())) * units, shape)
+    variable_name = numeric_data.getName()
+
+
+    arr = netcdf_file.variables[variable_name].data * units #np.reshape(np.array(JArray_double.cast_(numeric_data.getData())) * units, shape)
+
     if len(sampling_rate_units) == 1:
-        arr.sampling_rate = pq.Quantity(sampling_rates, sampling_rate_units[0])
+        arr.sampling_rates = (pq.Quantity(sampling_rates, sampling_rate_units[0]),)
     else:
         arr.sampling_rates = tuple(pq.Quantity(rate, unit) for (rate, unit) in zip(sampling_rates, sampling_rate_units))
 
