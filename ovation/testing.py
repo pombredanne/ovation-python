@@ -8,24 +8,6 @@ from ovation.api import OvationApiModule
 from ovation.test.util import TestUtils
 
 
-def __make_authenticated_dsc(local_stack, userIdentity, userPassword):
-    """Builds an authenticated DataStoreCoordinator for the given LocalStack
-    
-    Parameters
-    ----------
-    
-    local_stack : LocalStack
-    
-    Returns
-    -------
-    Authenticated DataStoreCoordinator
-    """
-
-    dsc = local_stack.getDataStoreCoordinator()
-    dsc.authenticateUser(userIdentity, JArray('char')(userPassword), False).get()
-
-    return dsc
-
 
 def __make_local_stack():
     """Builds a local database stack"""
@@ -47,7 +29,7 @@ def __make_local_stack():
 
 def make_local_stack():
     stack, userIdentity, userPassword = __make_local_stack()
-    dsc = __make_authenticated_dsc(stack, userIdentity, userPassword)
+    dsc = stack.getAuthenticatedDataStoreCoordinator()
 
     return (stack, dsc)
 
@@ -74,7 +56,7 @@ def local_stack():
     stack = None
     try:
         (stack, userIdentity, userPassword) = __make_local_stack()
-        yield __make_authenticated_dsc(stack, userIdentity, userPassword)
+        yield stack.getAuthenticatedDataStoreCoordinator()
     finally:
         if stack is not None:
             stack.cleanUp()
