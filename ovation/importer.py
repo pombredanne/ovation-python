@@ -106,7 +106,7 @@ def import_main(args=sys.argv,
                           protocol_id=args.protocol,
                           files=args.files,
                           timezone=args.timezone,
-                          **args)
+                          **vars(args))
     except Exception:
         logging.error('Unable to import {}'.format(args.files), exc_info=True)
         return 1

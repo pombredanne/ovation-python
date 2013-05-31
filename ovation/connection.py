@@ -6,7 +6,7 @@ from getpass import getpass
 
 import ovation
 from ovation.api import Ovation
-from ovation.logging import Logging
+from ovation.core import Logging
 
 def connect(email, password=None, logging=True):
     """Creates a new authenticated DataStoreCoordinator. d
