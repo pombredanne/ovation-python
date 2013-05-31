@@ -81,6 +81,7 @@ def import_main(argv=sys.argv,
     experiment_group.add_argument('--container', metavar='container_uuid', help='Epoch container ID', required=True)
     experiment_group.add_argument('--protocol', metavar='protocol_uuid', help='Protocol ID', required=True)
     experiment_group.add_argument('--source',
+                                  dest='sources',
                                   metavar='source_uuid',
                                   action='append',
                                   help='Source ID. Multiple Sources may be added by repeated use of --source',
@@ -112,9 +113,6 @@ def import_main(argv=sys.argv,
         args = vars(args)
         args.pop('user')
         args.pop('password')
-
-        # Rename args.source => args.sources
-        args['sources'] = args.pop('source')
 
         return import_fn(ctx, **args)
     except Exception:
