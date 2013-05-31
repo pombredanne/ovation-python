@@ -78,9 +78,14 @@ def import_main(argv=sys.argv,
                         help='timezone name in which data was collected. Default = local time zone')
 
     experiment_group = parser.add_argument_group('epoch container')
-    experiment_group.add_argument('--container', help='epoch container ID', required=True)
-    experiment_group.add_argument('--protocol', help='protocol ID', required=True)
-    experiment_group.add_argument('--sources', help='Source IDs', required=False, nargs='+', type=str)
+    experiment_group.add_argument('--container', metavar='container_uuid', help='Epoch container ID', required=True)
+    experiment_group.add_argument('--protocol', metavar='protocol_uuid', help='Protocol ID', required=True)
+    experiment_group.add_argument('--source',
+                                  metavar='source_uuid',
+                                  action='append',
+                                  help='Source ID. Multiple Sources may be added by repeated use of --source',
+                                  required=False,
+                                  type=str)
 
     if parser_callback:
         parser = parser_callback(parser)
@@ -108,8 +113,14 @@ def import_main(argv=sys.argv,
         args.pop('user')
         args.pop('password')
 
+        # Rename args.source => args.sources
+        args['sources'] = args.pop('source')
+
         return import_fn(ctx, **args)
     except Exception:
         logging.error('Unable to import {}'.format(args.files), exc_info=True)
         return 1
 
+
+if __name__ == '__main__':
+    sys.exit(import_main())
