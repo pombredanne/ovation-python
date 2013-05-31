@@ -1,10 +1,10 @@
 # Copyright 2011, Physion Consulting LLC
 # -*- coding: utf-8 -*-
+import logging
 
 import sys
 import argparse
 import getpass
-import logging
 
 from ovation.connection import connect
 
