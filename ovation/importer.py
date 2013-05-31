@@ -101,7 +101,12 @@ def import_main(argv=sys.argv,
     ctx = dsc.getContext()
 
     try:
-        return import_fn(ctx, **vars(args))
+        # Remove authentication info from args
+        args = vars(args)
+        args.pop('user')
+        args.pop('password')
+
+        return import_fn(ctx, **args)
     except Exception:
         logging.error('Unable to import {}'.format(args.files), exc_info=True)
         return 1
