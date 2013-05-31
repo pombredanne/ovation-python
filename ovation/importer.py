@@ -8,7 +8,7 @@ import logging
 
 from ovation.connection import connect
 
-def import_main(args=sys.argv,
+def import_main(argv=sys.argv,
                 name=__name__,
                 description=None,
                 file_ext=None,
