@@ -25,6 +25,7 @@ def import_main(argv=sys.argv,
         import_fn(data_context,
                   container=None, #EpochContainer UUID
                   protocol=None, #Protocol UUID
+                  sources=[], #Source UUIDs
                   files=[],
                   timezone=None,
                   **args)
@@ -79,6 +80,7 @@ def import_main(argv=sys.argv,
     experiment_group = parser.add_argument_group('epoch container')
     experiment_group.add_argument('--container', help='epoch container ID', required=True)
     experiment_group.add_argument('--protocol', help='protocol ID', required=True)
+    experiment_group.add_argument('--sources', help='Source IDs', required=False, nargs='+', type=str)
 
     if parser_callback:
         parser = parser_callback(parser)
