@@ -23,10 +23,10 @@ def import_main(argv=sys.argv,
     The import function must be of the form::
 
         import_fn(data_context,
-                  container_id=args.container,
-                  protocol_id=args.protocol,
-                  files=args.files,
-                  timezone=args.timezone,
+                  container=None, #EpochContainer UUID
+                  protocol=None, #Protocol UUID
+                  files=[],
+                  timezone=None,
                   **args)
 
     A minimal import __main__.py using `import_main`::
@@ -101,12 +101,7 @@ def import_main(argv=sys.argv,
     ctx = dsc.getContext()
 
     try:
-        return import_fn(ctx,
-                          container_id=args.container,
-                          protocol_id=args.protocol,
-                          files=args.files,
-                          timezone=args.timezone,
-                          **vars(args))
+        return import_fn(ctx, **vars(args))
     except Exception:
         logging.error('Unable to import {}'.format(args.files), exc_info=True)
         return 1
