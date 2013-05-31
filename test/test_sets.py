@@ -2,7 +2,7 @@ import collections
 from nose.tools import istest, assert_true
 
 from ovation import Map, Maps, Integer
-from conversion import to_java_set
+from ovation.conversion import to_java_set
 
 @istest
 def to_java_set_should_convert_set():
