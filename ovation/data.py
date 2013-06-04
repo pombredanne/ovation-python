@@ -7,7 +7,7 @@ from scipy.io import netcdf
 
 import ovation
 from ovation.conversion import to_dict, to_java_set
-from ovation.core import NumericData, NumericMeasurementUtils, DataElement
+from ovation.core import NumericData, NumericMeasurements, DataElement
 from ovation import URL
 
 __author__ = 'barry'
@@ -30,11 +30,11 @@ def as_data_frame(numeric_measurement):
         Dict of `Quantity` arrays with additional dimension `labels`, `sampling_rates` properties
     """
 
-    if not NumericMeasurementUtils.isNumericMeasurement(numeric_measurement):
+    if not NumericMeasurements.isNumericMeasurement(numeric_measurement):
         raise NumericMeasurementException("Attempted to convert a non-numeric measurement to a data frame")
 
     data_path = DataElement.cast_(numeric_measurement).getLocalDataPath().get()
-    numeric_data = NumericMeasurementUtils.getNumericData(numeric_measurement).get()
+    numeric_data = NumericMeasurements.getNumericData(numeric_measurement).get()
 
     with _netcdf_file_context(data_path, 'r') as ncf:
         result = {}
@@ -111,7 +111,7 @@ def insert_numeric_measurement(epoch, sources, devices, name, data_frame):
                                    to_java_set(sources),
                                    to_java_set(devices),
                                    URL('file://{}'.format(tmp.name)),
-                                   NumericMeasurementUtils.NUMERIC_MEASUREMENT_CONTENT_TYPE)
+                                   NumericMeasurements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 
 def variable_dimension_name(dim, name):

@@ -112,7 +112,7 @@ def import_main(argv=sys.argv,
         # Remove authentication info from args
         args = vars(args)
         args.pop('user')
-        args.pop('password')
+        args.pop('password')N
 
         return import_fn(ctx, **args)
     except Exception:
