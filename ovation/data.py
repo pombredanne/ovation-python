@@ -7,22 +7,22 @@ from scipy.io import netcdf
 
 import ovation
 from ovation.conversion import to_dict, to_java_set
-from ovation.core import NumericData, NumericMeasurements, DataElement
+from ovation.core import NumericData, NumericDataElements, DataElement
 from ovation import URL
 
 __author__ = 'barry'
 __copyright__= 'Copyright (c) 2013. Physion Consulting. All rights reserved.'
 
 
-def as_data_frame(numeric_measurement):
-    """Converts a numeric Ovation numeric `Measurement` to a dictionary of `Quantities` (NumPy) arrays.
+def as_data_frame(numeric_data_element):
+    """Converts a numeric Ovation numeric `DataElement` to a dictionary of `Quantities` (NumPy) arrays.
     This dictionary can be used to create a Pandas `DataFrame`, though as of Pandas 0.11.0, Quantities' units
     information will be lost.
 
     Parameters
     ----------
-    numeric_measurement : us.physion.ovation.domain.Measurement
-        Numeric `Measurement` instance to convert to a dictionary of`quantities` arrays
+    numeric_data_element : us.physion.ovation.domain.mixin.DataElement
+        Numeric `DataElement` instance to convert to a dictionary of`quantities` arrays
 
     Returns
     -------
@@ -30,11 +30,11 @@ def as_data_frame(numeric_measurement):
         Dict of `Quantity` arrays with additional dimension `labels`, `sampling_rates` properties
     """
 
-    if not NumericMeasurements.isNumericMeasurement(numeric_measurement):
+    if not NumericDataElements.isNumeric(numeric_data_element):
         raise NumericMeasurementException("Attempted to convert a non-numeric measurement to a data frame")
 
-    data_path = DataElement.cast_(numeric_measurement).getLocalDataPath().get()
-    numeric_data = NumericMeasurements.getNumericData(numeric_measurement).get()
+    data_path = DataElement.cast_(numeric_data_element).getLocalDataPath().get()
+    numeric_data = NumericDataElements.getNumericData(numeric_data_element).get()
 
     with _netcdf_file_context(data_path, 'r') as ncf:
         result = {}
@@ -71,6 +71,47 @@ class NumericMeasurementException(Exception):
         Exception.__init__(self, message)
 
 
+def insert_numeric_analysis_artifact(analysis_record, name, data_frame):
+    """Inserts a `dict` of Quantities (NumPy) arrays as a numeric output on the given `AnalysisRecord`
+
+    Parameters
+    ----------
+    analysis_record : us.physion.ovation.domain.AnalysisRecord
+    name : string
+        Output name
+    data_frame : dict of pq.Quantity
+        Quantity (NumPy) array with `labels` and `sampling_rate` properties
+
+    Returns
+    -------
+    output : us.physion.ovation.domain.mixin.DataElement
+         Numeric `Measurement` instance containing the given data frame
+    """
+
+    tmp = _make_temp_numeric_file(data_frame, name)
+
+    return analysis_record.addOutput(name,
+                                     URL('file://{}'.format(tmp.name)),
+                                     NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
+
+
+def _make_temp_numeric_file(data_frame, name):
+    tmp = tempfile.NamedTemporaryFile(
+        prefix=name,
+        suffix=".nc",
+        delete=False)
+    with _netcdf_file_context(tmp.name, 'w') as ncf:
+        for name, arr in data_frame.iteritems():
+            _create_variable(ncf,
+                             name,
+                             arr,
+                             arr.labels,
+                             units=arr.dimensionality.string,
+                             samplingRates=[r.item() for r in arr.sampling_rates],
+                             samplingRateUnits=json.dumps([r.dimensionality.string for r in arr.sampling_rates]))
+    return tmp
+
+
 def insert_numeric_measurement(epoch, sources, devices, name, data_frame):
     """Inserts a `dict` of Quantities (NumPy) arrays as a numeric `Measurement` on the given `Epoch`
 
@@ -92,26 +133,13 @@ def insert_numeric_measurement(epoch, sources, devices, name, data_frame):
          Numeric `Measurement` instance containing the given data frame
     """
 
-    tmp = tempfile.NamedTemporaryFile(
-        prefix=name,
-        suffix=".nc",
-        delete=False)
-
-    with _netcdf_file_context(tmp.name, 'w') as ncf:
-        for name,arr in data_frame.iteritems():
-            _create_variable(ncf,
-                            name,
-                            arr,
-                            arr.labels,
-                            units=arr.dimensionality.string,
-                            samplingRates=[r.item() for r in arr.sampling_rates],
-                            samplingRateUnits=json.dumps([r.dimensionality.string for r in arr.sampling_rates]))
+    tmp = _make_temp_numeric_file(data_frame, name)
 
     return epoch.insertMeasurement(name,
                                    to_java_set(sources),
                                    to_java_set(devices),
                                    URL('file://{}'.format(tmp.name)),
-                                   NumericMeasurements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
+                                   NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 
 def variable_dimension_name(dim, name):

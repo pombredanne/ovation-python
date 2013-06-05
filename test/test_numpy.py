@@ -1,5 +1,6 @@
 import numpy as np
-from ovation.data import as_data_frame, insert_numeric_measurement
+from ovation.conversion import to_map
+from ovation.data import as_data_frame, insert_numeric_measurement, insert_numeric_analysis_artifact
 from ovation.testing import TestBase
 import quantities as pq
 
@@ -83,6 +84,28 @@ class TestNumPy(TestBase):
        (expected, actual) = _round_trip_array(arr, self.expt, self.protocol)
 
        assert_data_frame_equals(expected, actual)
+
+    @istest
+    def should_round_trip_2D_floating_point_analysis_artifact(self):
+        arr = np.random.randn(10,10) * pq.s
+        arr.labels = [u'volts', u'other']
+        arr.name = u'name'
+        arr.sampling_rates = [1.0 * pq.Hz, 10.0 * pq.Hz]
+
+        epoch = EpochContainer.cast_(self.expt).insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
+
+        ar = epoch.insertAnalysisRecord("record", to_map({}), self.protocol, to_map({}))
+
+        result_name = 'result'
+        expected = {result_name: arr}
+        artifact = insert_numeric_analysis_artifact(ar, "record-name", expected)
+
+        assert artifact is not None
+
+        actual = as_data_frame(ar.getOutputs().get(result_name))
+
+        assert_data_frame_equals(expected, actual)
+
 
 
 def _round_trip_array(arr, experiment, protocol):
