@@ -91,7 +91,7 @@ def import_main(argv=sys.argv,
     if parser_callback:
         parser = parser_callback(parser)
 
-    args = parser.parse_args(args=argv)
+    args = parser.parse_args(args=argv[1:])
 
     logging.basicConfig(filename='import.log',level=logging.INFO)
 
