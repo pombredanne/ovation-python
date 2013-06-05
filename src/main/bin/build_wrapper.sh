@@ -1,6 +1,7 @@
 #!/bin/bash
 
 VERSION=$1
+shift
 
 if [[ -z $NO_VENV ]] ; then
 	# On python 3
@@ -16,7 +17,7 @@ if [[ -z $NO_VENV ]] ; then
 	pip install jcc
 fi
 
-python "../../src/main/bin/build_wrapper.py" "$VERSION" ../../pom.xml "-Pjenkins"
+python "../../src/main/bin/build_wrapper.py" "$VERSION" ../../pom.xml @$
 
 
 if [[ -z $NO_VENV ]] ; then

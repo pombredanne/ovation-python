@@ -1,3 +1,4 @@
+from time import sleep
 import numpy as np
 from ovation.conversion import to_map
 from ovation.data import as_data_frame, insert_numeric_measurement, insert_numeric_analysis_artifact
@@ -98,11 +99,14 @@ class TestNumPy(TestBase):
 
         result_name = 'result'
         expected = {result_name: arr}
-        artifact = insert_numeric_analysis_artifact(ar, "record-name", expected)
+        record_name = "record-name"
+        artifact = insert_numeric_analysis_artifact(ar, record_name, expected)
 
         assert artifact is not None
 
-        actual = as_data_frame(ar.getOutputs().get(result_name))
+        sleep(0.5)
+
+        actual = as_data_frame(ar.getOutputs().get(record_name))
 
         assert_data_frame_equals(expected, actual)
 
@@ -114,6 +118,8 @@ def _round_trip_array(arr, experiment, protocol):
     expected = { trace_name: arr }
 
     m = insert_numeric_measurement(epoch, set(['source']), set(), trace_name, expected)
+
+    sleep(0.5)
 
     actual = as_data_frame(m)
     return (expected, actual)

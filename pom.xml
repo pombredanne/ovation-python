@@ -33,6 +33,7 @@
 							<workingDirectory>${project.build.directory}/python</workingDirectory>
 							<arguments>
 								<argument>${project.version}</argument>
+                                <argument>-Pjenkins</argument>
 							</arguments>    
 							<environmentVariables>
 							</environmentVariables>
