@@ -110,11 +110,11 @@ def import_main(argv=sys.argv,
 
     try:
         # Remove authentication info from args
-        args = vars(args)
-        args.pop('user')
-        args.pop('password')
+        args_dict = vars(args)
+        args_dict.pop('user')
+        args_dict.pop('password')
 
-        return import_fn(ctx, **args)
+        return import_fn(ctx, **args_dict)
     except Exception:
         logging.error('Unable to import {}'.format(args.files), exc_info=True)
         return 1
