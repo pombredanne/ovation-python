@@ -32,6 +32,7 @@ def main(argv=sys.argv):
             "java.io.File",
             "java.net.URI",
             "java.net.URL",
+            "java.util.concurrent.TimeUnit",
             "com.google.common.base.Optional",
             "com.google.common.util.concurrent.ListenableFuture",
             "com.google.common.util.concurrent.Futures",
