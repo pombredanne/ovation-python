@@ -78,13 +78,13 @@ def import_main(argv=sys.argv,
                         help='timezone name in which data was collected. Default = local time zone')
 
     experiment_group = parser.add_argument_group('epoch container')
-    experiment_group.add_argument('--container', metavar='container_uuid', help='Epoch container ID', required=True)
-    experiment_group.add_argument('--protocol', metavar='protocol_uuid', help='Protocol ID', required=True)
+    experiment_group.add_argument('--container', metavar='container_uri', help='Epoch container URI', required=True)
+    experiment_group.add_argument('--protocol', metavar='protocol_uri', help='Protocol URI', required=True)
     experiment_group.add_argument('--source',
                                   dest='sources',
-                                  metavar='source_uuid',
+                                  metavar='source_uri',
                                   action='append',
-                                  help='Source ID. Multiple Sources may be added by repeated use of --source',
+                                  help='Source URI. Multiple Sources may be added by repeated use of --source',
                                   required=False,
                                   type=str)
 
