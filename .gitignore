@@ -51,3 +51,5 @@ wrapper.build.venv/
 *.gz
 
 setup.cfg
+
+nose_xunit.xml

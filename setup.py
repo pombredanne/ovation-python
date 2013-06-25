@@ -8,7 +8,7 @@ from setuptools import setup
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
     
-VERSION = "2.0-SNAPSHOT"
+VERSION = "2.0-beta1"
 setup(name='ovation',
       version=VERSION,
       description='Ovation Python API',
@@ -22,10 +22,12 @@ setup(name='ovation',
           "Intended Audience :: Science/Research",
           "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
       ],
+      setup_requires=['nose>=1.3.0', 'coverage==3.6'],
       install_requires=[#"ovation-api >= {version}".format(version=VERSION),
                         "scipy >= 0.12.0",
                         "numpy >= 1.7.1",
                         "pandas >= 0.11.0",
                         "quantities >= 0.10.1",
+                        "python-dateutil==2.1",
                         ],
 )
