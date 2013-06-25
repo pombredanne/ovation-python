@@ -95,7 +95,7 @@ class TestNumPy(TestBase):
 
         epoch = EpochContainer.cast_(self.expt).insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
 
-        ar = epoch.insertAnalysisRecord("record", to_map({}), self.protocol, to_map({}))
+        ar = epoch.addAnalysisRecord("record", to_map({}), self.protocol, to_map({}))
 
         result_name = 'result'
         expected = {result_name: arr}
@@ -117,7 +117,11 @@ def _round_trip_array(arr, experiment, protocol):
     trace_name = 'trace1'
     expected = { trace_name: arr }
 
-    m = insert_numeric_measurement(epoch, set(['source']), set(), trace_name, expected)
+    sourceName = 'source'
+    s = epoch.getDataContext().insertSource('source-name', 'source-id')
+    epoch.addInputSource(sourceName, s)
+
+    m = insert_numeric_measurement(epoch, set([sourceName]), set(['amp']), trace_name, expected)
 
     sleep(0.5)
 
