@@ -8,7 +8,7 @@ from setuptools import setup
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
     
-VERSION = "2.0-SNAPSHOT"
+VERSION = "2.0-beta1"
 setup(name='ovation-api',
       version=VERSION,
       description='Low-level Ovation API wrapper module',
