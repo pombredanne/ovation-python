@@ -6,7 +6,10 @@ from setuptools import setup
 
 # Utility function to read the README file.
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    try:
+        return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    except IOError:
+        return "Ovation Python API"
     
 VERSION = "2.0-beta1"
 setup(name='ovation',
@@ -28,6 +31,5 @@ setup(name='ovation',
                         "numpy >= 1.7.1",
                         "pandas >= 0.11.0",
                         "quantities >= 0.10.1",
-                        "python-dateutil==2.1",
                         ],
 )
