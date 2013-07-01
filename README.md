@@ -10,16 +10,17 @@ Jython users can access the Ovation Java API directly and should *not* use this 
 
 ## Requirements
 
-* Java 1.6+
-* CPython 2.7+ or 3.3+
-* NumPy 1.7+
-* Quantities 0.10+
+* Java 1.6 or later
+* CPython 2.7.x
+* NumPy 1.7
+* Scipy 0.12
+* Pandas 0.10
+* Quantities 0.10
 
 ## Technical details
 
 We use the amazing PyLucene JCC library to generate the native wrapper. The wrapper translates between CPython objects and an embedded Java VM via a native Python extension and JNI, the Java Native Interface.
 
-JCC wraps each Java class in the Ovation Java API under the `ovation` python package.
 
 ## Building
 
@@ -31,15 +32,21 @@ Build requires:
 
 * Java 1.6 or later
 * Maven 3 or later
-* CPython 2.7 or later
+* CPython 2.7.x
 
 ## Installation
 
-Download the ovation-python `egg` from http://ovation.io. Install the `egg` with `easy_install`. At the command line::
+### From PyPI
 
-	$ sudo easy_install ovation-python-[PY_VERSION]-[OS].egg
-	
-where `PY_VERSION` is your Python version and `OS` is your operating system. 
+Install the `ovation` package from PyPI::
+    
+    $ easy_install ovation
+
+### From Source
+
+Install the compiled `ovation-api` egg from `target/python/dist`::
+
+    easy_install -U target/python/dist/ovation_api-<VERSION>-py2.7-<OS>-<ARCH>.egg
 
 .. warning::
 	[OS X python + keychain]
