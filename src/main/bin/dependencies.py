@@ -29,7 +29,7 @@ def jar_list(dependencies=[]):
     
 def include_list(dependencies=[]):
     jars = set(jar_list(dependencies))
-    print jars
+    print(jars)
     for f in dependencies:
         if f not in jars:
             yield f
