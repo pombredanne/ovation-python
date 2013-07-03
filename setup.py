@@ -11,7 +11,7 @@ def read(fname):
     except IOError:
         return "Ovation Python API"
     
-VERSION = "2.0-beta1"
+VERSION = "2.0-beta2"
 setup(name='ovation',
       version=VERSION,
       description='Ovation Python API',
