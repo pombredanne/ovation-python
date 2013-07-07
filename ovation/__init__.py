@@ -1,5 +1,4 @@
 import os
-import os.path
 import glob
 
 jars_directory = os.path.join(os.path.dirname(__file__), 'jars')
@@ -25,3 +24,5 @@ File = autoclass("java.io.File")
 
 DateTime = autoclass("org.joda.time.DateTime")
 DateTimeZone = autoclass("org.joda.time.DateTimeZone")
+
+TimeUnit = autoclass("java.util.concurrent.TimeUnit")

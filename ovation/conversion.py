@@ -1,6 +1,7 @@
 import collections
+import numbers
 
-from ovation import Maps, Sets
+from ovation import Maps, Sets, autoclass
 
 class Iterator(object):
     def __init__(self, jiterator):
@@ -34,7 +35,7 @@ def to_map(d):
         if isinstance(v, collections.Mapping):
             result.put(k, to_map(v))
         else:
-            result.put(k, v)
+            result.put(k, _box_numbers(v))
 
     return result
 
@@ -42,10 +43,22 @@ def to_map(d):
 def to_dict(m):
     return {key: m.get(key) for key in iterable(m.keySet())}
 
+
+def _box_numbers(item):
+    if isinstance(item, numbers.Number):
+        if isinstance(item, numbers.Integral):
+            value = autoclass("java.lang.Integer")(item)
+        else:
+            value = autoclass("java.lang.Double")(item)
+    else:
+        value = item
+    return value
+
+
 def to_java_set(s):
     result = Sets.newHashSet()
     for item in s:
-        result.add(item)
+        result.add(_box_numbers(item))
 
     return result
 
