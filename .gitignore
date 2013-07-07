@@ -56,3 +56,6 @@ wrapper.build.venv/
 setup.cfg
 
 nose_xunit.xml
+
+# JARs
+ovation/jars

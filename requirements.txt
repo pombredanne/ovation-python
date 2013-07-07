@@ -1,7 +1,5 @@
-JCC==2.16
-distribute==0.6.45
+jnius==1.1-dev
 numpy==1.7.1
 scipy==0.12.0
 pandas==0.11.0
 quantities==0.10.1
-ovation_api==2.0-beta1

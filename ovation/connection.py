@@ -6,10 +6,10 @@ from getpass import getpass
 
 import ovation
 from ovation.api import Ovation
-from ovation.core import Logging
+from ovation.logging import Logging
 
 def connect(email, password=None, logging=True):
-    """Creates a new authenticated DataStoreCoordinator. d
+    """Creates a new authenticated DataStoreCoordinator.
     
     Arguments
     ---------
@@ -39,6 +39,30 @@ def connect(email, password=None, logging=True):
         pw = password
     
     return Ovation.connect(email, pw)
+
+def new_data_context(email, password=None, logging=True):
+    """Creates a new authenticated DataContext.
+    
+    Arguments
+    ---------
+    email : string
+        Ovation.io account email
+    
+    password : string, optional
+        Ovation.io account passowrd. If ommited, the password will be prompted at the command prompt
+        
+    logging : boolean, optional
+        If true, configures Ovation logging. Logs will be placed in the default application
+        support directory, `~/Library/Application Support/us.physion.ovation/logs` on OS X, etc.
+    
+    Returns
+    -------
+    context : ovation.DataContext
+        A new authenticated DataContext
+    
+    """
+    
+    return connect(email, password=password, logging=logging).getContext()
 
 
 def nbgetpass(prompt="Ovation.io Credentials", passwd='passwd', email='email'):

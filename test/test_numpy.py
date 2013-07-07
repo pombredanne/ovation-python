@@ -93,7 +93,7 @@ class TestNumPy(TestBase):
         arr.name = u'name'
         arr.sampling_rates = [1.0 * pq.Hz, 10.0 * pq.Hz]
 
-        epoch = EpochContainer.cast_(self.expt).insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
+        epoch = self.expt.insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
 
         ar = epoch.addAnalysisRecord("record", to_map({}), self.protocol, to_map({}))
 
@@ -113,7 +113,7 @@ class TestNumPy(TestBase):
 
 
 def _round_trip_array(arr, experiment, protocol):
-    epoch = EpochContainer.cast_(experiment).insertEpoch(DateTime(), DateTime(), protocol, None, None)
+    epoch = experiment.insertEpoch(DateTime(), DateTime(), protocol, None, None)
     trace_name = 'trace1'
     expected = { trace_name: arr }
 

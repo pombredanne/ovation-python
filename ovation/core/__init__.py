@@ -1,9 +1,5 @@
-import ovation
+from ovation import autoclass
 
-
-from us.physion.ovation.domain import *
-from us.physion.ovation.values import *
-from us.physion.ovation.domain.mixin import *
-
-from us.physion.ovation.logging import *
+NumericDataElements = autoclass("us.physion.ovation.domain.NumericDataElements")
+NumericData = autoclass("us.physion.ovation.values.NumericData")
 

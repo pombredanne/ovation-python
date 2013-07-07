@@ -7,7 +7,7 @@ from scipy.io import netcdf
 
 import ovation
 from ovation.conversion import to_dict, to_java_set
-from ovation.core import NumericData, NumericDataElements, DataElement
+from ovation.core import NumericData, NumericDataElements
 from ovation import URL
 
 __author__ = 'barry'
@@ -33,7 +33,7 @@ def as_data_frame(numeric_data_element):
     if not NumericDataElements.isNumeric(numeric_data_element):
         raise NumericMeasurementException("Attempted to convert a non-numeric measurement to a data frame")
 
-    data_path = DataElement.cast_(numeric_data_element).getLocalDataPath().get()
+    data_path = numeric_data_element.getLocalDataPath().get()
     numeric_data = NumericDataElements.getNumericData(numeric_data_element).get()
 
     with _netcdf_file_context(data_path, 'r') as ncf:

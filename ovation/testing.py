@@ -3,7 +3,6 @@
 import uuid
 from contextlib import contextmanager
 
-from ovation import JArray, initVM
 from ovation.api import OvationApiModule
 from ovation.test.util import TestUtils
 
@@ -65,9 +64,6 @@ def local_stack():
 class TestBase(object):
     @classmethod
     def setup_class(cls):
-        print("Initializing VM...")
-        initVM()
-
         print("Creating local database stack...")
         (cls.local_stack, cls.dsc) = make_local_stack()
 

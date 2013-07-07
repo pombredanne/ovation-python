@@ -15,12 +15,6 @@ Jython users can access the Ovation Java API directly and should *not* use this 
 * NumPy 1.7+
 * Quantities 0.10+
 
-## Technical details
-
-We use the amazing PyLucene JCC library to generate the native wrapper. The wrapper translates between CPython objects and an embedded Java VM via a native Python extension and JNI, the Java Native Interface.
-
-JCC wraps each Java class in the Ovation Java API under the `ovation` python package.
-
 ## Building
 
 To build the python wrapper at the command line:

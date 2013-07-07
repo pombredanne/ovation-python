@@ -1,7 +1,7 @@
 import collections
 from nose.tools import istest, assert_equals
 
-from ovation import Map, Maps, Integer
+from ovation import Maps
 from ovation.conversion import to_map, to_dict
 
 
@@ -34,13 +34,13 @@ def check_dict(d, m):
             k = unicode(k)
 
         if isinstance(v, collections.Mapping):
-            check_dict(v, Map.cast_(m.get(k)))
+            check_dict(v, m.get(k))
         else:
             if isinstance(v, basestring):
                 actual = unicode(m.get(k))
                 assert_equals(v, actual)
             elif isinstance(v, int):
-                actual = Integer.cast_(m.get(k)).intValue()
+                actual = m.get(k).intValue()
                 assert_equals(v, actual)
             else:
                 actual = m.get(k)
