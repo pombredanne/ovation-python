@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-import os.path
-
 from setuptools import setup, find_packages
 
 from dependencies import copy_dependencies

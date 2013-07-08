@@ -1,7 +1,7 @@
 import collections
 import numbers
 
-from ovation import Maps, Sets, autoclass
+from ovation import Maps, Sets, autoclass, cast
 
 class Iterator(object):
     def __init__(self, jiterator):
@@ -36,7 +36,7 @@ def to_map(d):
             nested_value = to_map(v)
             result.put(k, nested_value)
         else:
-            result.put(k, _box_numbers(v))
+            result.put(k, box_number(v))
 
     return result
 
@@ -45,7 +45,9 @@ def to_dict(m):
     return {key: m.get(key) for key in iterable(m.keySet())}
 
 
-def _box_numbers(item):
+def box_number(item):
+    """Boxes a Python number as a Java number object"""
+
     if isinstance(item, numbers.Number):
         if isinstance(item, numbers.Integral):
             value = autoclass("java.lang.Integer")(item)
@@ -59,8 +61,12 @@ def _box_numbers(item):
 def to_java_set(s):
     result = Sets.newHashSet()
     for item in s:
-        result.add(_box_numbers(item))
+        result.add(box_number(item))
 
     return result
 
+def asclass(cls_name, o):
+    if len(cls_name.split('.')):
+        cls_name = "us.physion.ovation.domain.{}".format(cls_name)
 
+    return cast(autoclass(cls_name), o)
