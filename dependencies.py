@@ -21,5 +21,5 @@ def copy_dependencies(pom_path="pom.xml", dest=None):
         if not os.path.isdir(dest):
             os.makedirs(dest)
         
-        for p in dependency_list(pom_path=pom_path, mvn_opts=mvn_opts):
+        for p in dependency_list(pom_path=pom_path):
             shutil.copy(p, dest)
