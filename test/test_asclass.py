@@ -36,3 +36,7 @@ class TestCast(TestBase):
         epoch = self.expt.insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
         assert_equals(self.expt.getUuid().toString(),
                       asclass("us.physion.ovation.domain.Experiment", epoch.getParent()).getUuid().toString())
+
+    @istest
+    def should_cast_none(self):
+        assert_equals(None, asclass("Experiment", None))

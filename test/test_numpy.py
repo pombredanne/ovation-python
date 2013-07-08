@@ -1,15 +1,13 @@
 from time import sleep
+
 import numpy as np
+import quantities as pq
+from nose.tools import istest, assert_equals, assert_true
+
 from ovation.conversion import to_map
 from ovation.data import as_data_frame, insert_numeric_measurement, insert_numeric_analysis_artifact
 from ovation.testing import TestBase
-import quantities as pq
-
-from nose.tools import istest, assert_equals, assert_true
-
-
 from ovation import DateTime
-from ovation.core import *
 
 
 def assert_data_frame_equals(expected, actual):
@@ -99,6 +97,37 @@ class TestNumPy(TestBase):
 
         result_name = 'result'
         expected = {result_name: arr}
+        record_name = "record-name"
+        artifact = insert_numeric_analysis_artifact(ar, record_name, expected)
+
+        assert artifact is not None
+
+        sleep(0.5)
+
+        actual = as_data_frame(ar.getOutputs().get(record_name))
+
+        assert_data_frame_equals(expected, actual)
+
+    @istest
+    def should_round_trip_multi_element_data_frame(self):
+        arr1 = np.random.randn(10,10) * pq.s
+        arr1.labels = [u'volts', u'other']
+        arr1.name = u'name'
+        arr1.sampling_rates = [1.0 * pq.Hz, 10.0 * pq.Hz]
+
+        arr2 = np.random.randn(10,10) * pq.V
+        arr2.labels = [u'volts', u'other']
+        arr2.name = u'name'
+        arr2.sampling_rates = [1.0 * pq.Hz, 10.0 * pq.Hz]
+
+        epoch = self.expt.insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
+
+        ar = epoch.addAnalysisRecord("record", to_map({}), self.protocol, to_map({}))
+
+        result_name1 = 'result'
+        result_name2 = 'other-result'
+        expected = {result_name1: arr1,
+                    result_name2: arr2}
         record_name = "record-name"
         artifact = insert_numeric_analysis_artifact(ar, record_name, expected)
 
