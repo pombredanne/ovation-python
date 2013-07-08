@@ -25,8 +25,14 @@ class TestCast(TestBase):
         self.expt = self.__class__.expt
         self.protocol = self.__class__.protocol
 
+    # @istest
+    # def should_cast_experiment_from_procedure_element(self):
+    #     epoch = self.expt.insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
+    #     assert_equals(self.expt.getUuid().toString(),
+    #                   asclass("Experiment", epoch.getParent()).getUuid().toString())
+
     @istest
-    def should_cast_experiment_to_procedure_element(self):
+    def should_cast_experiment_from_procedure_element_via_explicit_cast(self):
         epoch = self.expt.insertEpoch(DateTime(), DateTime(), self.protocol, None, None)
         assert_equals(self.expt.getUuid().toString(),
-                      asclass("Experiment", epoch.getParent()).getUuid().toString())
+                      asclass("us.physion.ovation.domain.Experiment", epoch.getParent()).getUuid().toString())

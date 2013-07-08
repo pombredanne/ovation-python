@@ -66,7 +66,7 @@ def to_java_set(s):
     return result
 
 def asclass(cls_name, o):
-    if len(cls_name.split('.')):
+    if len(cls_name.split('.')) == 1:
         cls_name = "us.physion.ovation.domain.{}".format(cls_name)
 
     return cast(autoclass(cls_name), o)
