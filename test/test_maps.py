@@ -10,6 +10,7 @@ def to_dict_should_convert_flat_map():
     m = Maps.newHashMap()
     m.put('key1', 'value1')
     m.put('key2', autoclass("java.lang.Integer")(2))
+    m.put('key3', autoclass("java.lang.Double")(2.5))
 
     d = to_dict(m)
 
@@ -20,6 +21,7 @@ def to_dict_should_convert_flat_map():
 def to_map_should_convert_flat_dict():
     d = {'key1': 'value1',
          'key2': 2,
+         'key3' : 2.5,
          3: 'value3',
          4: 5}
 
@@ -40,6 +42,9 @@ def check_dict(d, m):
                 actual = unicode(m.get(k))
                 assert_equals(v, actual)
             elif isinstance(v, int):
+                actual = m.get(k)
+                assert_equals(v, actual)
+            elif isinstance(v, float):
                 actual = m.get(k)
                 assert_equals(v, actual)
             else:
