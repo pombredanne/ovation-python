@@ -33,7 +33,8 @@ def to_map(d):
         if not isinstance(k, basestring):
             k = unicode(k)
         if isinstance(v, collections.Mapping):
-            result.put(k, to_map(v))
+            nested_value = to_map(v)
+            result.put(k, nested_value)
         else:
             result.put(k, _box_numbers(v))
 
