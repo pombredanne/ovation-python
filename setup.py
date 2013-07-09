@@ -39,4 +39,5 @@ setup(name='ovation',
                         "pandas >= 0.11.0",
                         "quantities >= 0.10.1",
                         ],
+      test_suite='nose.collector',
 )

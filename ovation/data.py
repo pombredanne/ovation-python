@@ -7,7 +7,7 @@ from scipy.io import netcdf
 
 from ovation.conversion import to_java_set
 from ovation.core import NumericDataElements
-from ovation import URL
+from ovation import File, URL
 
 __author__ = 'barry'
 __copyright__= 'Copyright (c) 2013. Physion Consulting. All rights reserved.'
@@ -92,7 +92,7 @@ def insert_numeric_analysis_artifact(analysis_record, name, data_frame):
     tmp = _make_temp_numeric_file(data_frame, name)
 
     return analysis_record.addOutput(name,
-                                     URL('file://{}'.format(tmp.name)),
+                                     File(tmp.name).toURI().toURL(),
                                      NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 
@@ -139,7 +139,7 @@ def insert_numeric_measurement(epoch, sources, devices, name, data_frame):
     return epoch.insertMeasurement(name,
                                    to_java_set(sources),
                                    to_java_set(devices),
-                                   URL('file://{}'.format(tmp.name)),
+                                   File(tmp.name).toURI().toURL(),
                                    NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 

@@ -29,12 +29,24 @@ Build requires:
 
 ## Installation
 
-Download the ovation-python `egg` from http://ovation.io. Install the `egg` with `easy_install`. At the command line::
+Install the `ovation` package from `PyPI <http://pypi.python.org>`_:
 
-	$ sudo easy_install ovation-python-[PY_VERSION]-[OS].egg
-	
-where `PY_VERSION` is your Python version and `OS` is your operating system. 
+	pip install ovation
 
+
+### Windows
+
+VS2008 Runtime: http://www.microsoft.com/en-us/download/details.aspx?id=29
+
+Install Cython, NumPy, Scipy binaries from http://www.lfd.uci.edu/~gohlke/pythonlibs/#cython
+
+
+Add to Path:
+
+	C:\Program Files\Java\[jre7]\bin\client
+	C:\Program Files\Java\[jre7]\bin\client
+
+### OS X
 .. warning::
 	[OS X python + keychain]
 
