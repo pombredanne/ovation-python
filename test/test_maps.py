@@ -21,7 +21,8 @@ def to_dict_should_convert_flat_map():
 def to_map_should_convert_flat_dict():
     d = {'key1': 'value1',
          'key2': 2,
-         'key3' : 2.5,
+         'key3': 2.5,
+         'key4': 'value4',
          3: 'value3',
          4: 5}
 
@@ -41,10 +42,7 @@ def check_dict(d, m):
             if isinstance(v, basestring):
                 actual = unicode(m.get(k))
                 assert_equals(v, actual)
-            elif isinstance(v, int):
-                actual = m.get(k)
-                assert_equals(v, actual)
-            elif isinstance(v, float):
+            elif isinstance(v, int) or isinstance(v, float):
                 actual = m.get(k)
                 assert_equals(v, actual)
             else:

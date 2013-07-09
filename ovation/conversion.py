@@ -1,7 +1,7 @@
 import collections
 import numbers
 
-from ovation import Maps, Sets, autoclass, cast
+from ovation import Maps, Sets, cast, autoclass, Integer, Double
 
 class Iterator(object):
     def __init__(self, jiterator):
@@ -42,17 +42,21 @@ def to_map(d):
 
 
 def to_dict(m):
-    return {key: m.get(key) for key in iterable(m.keySet())}
+    result = {}
+    for k in m.keySet().toArray():
+        result[k] = m.get(k)
 
+    return result
+    #return {key: m.get(key) for key in iterable(m.keySet())}
 
 def box_number(item):
     """Boxes a Python number as a Java number object"""
 
     if isinstance(item, numbers.Number):
         if isinstance(item, numbers.Integral):
-            value = autoclass("java.lang.Integer")(item)
+            value = Integer(item)
         else:
-            value = autoclass("java.lang.Double")(item)
+            value = Double(item)
     else:
         value = item
     return value

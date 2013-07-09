@@ -24,7 +24,7 @@ setup(name='ovation',
       author_email='info@ovation.io',
       url='http://ovation.io',
       long_description=DESCRIPTION,
-      packages=find_packages(exclude=["test.*", "ez_setup", "src"]),
+      packages=find_packages(exclude=["test.*", "ez_setup", "examples"]),
       package_data={'ovation' : ["jars/*.jar"]},
       zip_safe=False,
       classifiers=[
