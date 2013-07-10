@@ -1,6 +1,5 @@
-JCC==2.16
+phyjnius==1.2.1
 numpy==1.7.1
 scipy==0.12.0
 pandas==0.11.0
 quantities==0.10.1
-ovation-api==2.0-beta2

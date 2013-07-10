@@ -5,10 +5,9 @@ import quantities as pq
 
 from scipy.io import netcdf
 
-import ovation
-from ovation.conversion import to_dict, to_java_set
-from ovation.core import NumericData, NumericDataElements, DataElement
-from ovation import URL
+from ovation.conversion import to_java_set
+from ovation.core import NumericDataElements
+from ovation import File, URL
 
 __author__ = 'barry'
 __copyright__= 'Copyright (c) 2013. Physion Consulting. All rights reserved.'
@@ -33,13 +32,15 @@ def as_data_frame(numeric_data_element):
     if not NumericDataElements.isNumeric(numeric_data_element):
         raise NumericMeasurementException("Attempted to convert a non-numeric measurement to a data frame")
 
-    data_path = DataElement.cast_(numeric_data_element).getLocalDataPath().get()
+    data_path = numeric_data_element.getLocalDataPath().get()
     numeric_data = NumericDataElements.getNumericData(numeric_data_element).get()
 
     with _netcdf_file_context(data_path, 'r') as ncf:
         result = {}
 
-        for (name,element) in to_dict(numeric_data.getData()).iteritems():
+        #data_elements = to_dict(numeric_data.getData())
+        for k in numeric_data.getData().keySet().toArray(): #(name,element) in data_elements.iteritems():
+            element = numeric_data.getData().get(k)
 
             units = pq.Quantity(1, element.units)
             sampling_rates = element.samplingRates
@@ -53,7 +54,7 @@ def as_data_frame(numeric_data_element):
 
             arr.labels = dimension_labels
 
-            result[name] = arr
+            result[k] = arr
 
         return result
 
@@ -91,7 +92,7 @@ def insert_numeric_analysis_artifact(analysis_record, name, data_frame):
     tmp = _make_temp_numeric_file(data_frame, name)
 
     return analysis_record.addOutput(name,
-                                     URL('file://{}'.format(tmp.name)),
+                                     File(tmp.name).toURI().toURL(),
                                      NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 
@@ -101,9 +102,9 @@ def _make_temp_numeric_file(data_frame, name):
         suffix=".nc",
         delete=False)
     with _netcdf_file_context(tmp.name, 'w') as ncf:
-        for name, arr in data_frame.iteritems():
+        for array_name, arr in data_frame.iteritems():
             _create_variable(ncf,
-                             name,
+                             array_name,
                              arr,
                              arr.labels,
                              units=arr.dimensionality.string,
@@ -138,7 +139,7 @@ def insert_numeric_measurement(epoch, sources, devices, name, data_frame):
     return epoch.insertMeasurement(name,
                                    to_java_set(sources),
                                    to_java_set(devices),
-                                   URL('file://{}'.format(tmp.name)),
+                                   File(tmp.name).toURI().toURL(),
                                    NumericDataElements.NUMERIC_MEASUREMENT_CONTENT_TYPE)
 
 

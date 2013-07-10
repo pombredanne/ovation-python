@@ -1,3 +1,6 @@
-import ovation
+from ovation import autoclass
 
-from us.physion.ovation.api import *
+Ovation = autoclass("us.physion.ovation.api.Ovation")
+OvationApiModule = autoclass("us.physion.ovation.api.OvationApiModule")
+
+

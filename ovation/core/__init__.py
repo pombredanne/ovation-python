@@ -1,9 +1,7 @@
-import ovation
+from ovation import autoclass
 
+NumericDataElements = autoclass("us.physion.ovation.domain.NumericDataElements")
+NumericData = autoclass("us.physion.ovation.values.NumericData")
 
-from us.physion.ovation.domain import *
-from us.physion.ovation.values import *
-from us.physion.ovation.domain.mixin import *
-
-from us.physion.ovation.logging import *
+Logging = autoclass("us.physion.ovation.logging.Logging")
 
