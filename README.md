@@ -50,7 +50,7 @@ Add to Path:
 
 Install the `ovation` package from `PyPI <http://pypi.python.org>`_:
 
-	easy_install install ovation
+	pip install ovation
 	
 Note: if you are using Ovation from a Python virtualenv, see the [wiki](https://github.com/physion/ovation-python/wiki/Osx-virtualenv)
 
