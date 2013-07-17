@@ -48,7 +48,7 @@ Add to Path:
 
 ### OS X
 
-Install the `ovation` package from `PyPI <http://pypi.python.org>`_:
+Install the `ovation` package from [PyPI](http://pypi.python.org):
 
 	easy_install ovation
 	
