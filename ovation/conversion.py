@@ -1,7 +1,7 @@
 import collections
 import numbers
 
-from ovation import Maps, Sets, cast, autoclass, Integer, Double
+from ovation import Maps, Sets, cast, autoclass, Integer, Double, File
 
 class Iterator(object):
     def __init__(self, jiterator):
@@ -69,6 +69,24 @@ def to_java_set(s):
 
     return result
 
+def to_file_url(path):
+    """
+    Constructs a java.net.URL from a file system path
+
+    Arguments
+    ---------
+    path : string
+        file system path
+
+    Returns
+    -------
+    url : java.net.URL
+        file URL
+    """
+
+    return File(path).toURI().toURL()
+
+
 def asclass(cls_name, o):
     if o is None:
         return o
@@ -77,3 +95,4 @@ def asclass(cls_name, o):
         cls_name = "us.physion.ovation.domain.{}".format(cls_name)
 
     return cast(autoclass(cls_name), o)
+
