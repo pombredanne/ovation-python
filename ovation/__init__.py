@@ -8,7 +8,7 @@ for jar_path in glob.iglob(os.path.join(jars_directory, "*.jar")):
 
 os.environ["CLASSPATH"] = os.path.pathsep.join(CLASSPATH)
 
-from jnius import autoclass, cast
+from jnius import autoclass, cast, JavaException
 
 
 ### Common references outside the us.physion.ovation namespace
