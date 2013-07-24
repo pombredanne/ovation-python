@@ -3,30 +3,33 @@ import numbers
 
 from ovation import Maps, Sets, cast, autoclass, Integer, Double, File
 
+
 class Iterator(object):
     def __init__(self, jiterator):
         self.java_iterator = jiterator
-    
+
     def __iter__(self):
         return self
-    
+
     def next(self):
-        if(self.java_iterator.hasNext()):
+        if (self.java_iterator.hasNext()):
             return self.java_iterator.next()
-        
+
         raise StopIteration()
-        
+
+
 class IterableWrapper(object):
     def __init__(self, jiterable):
         self.java_iterable = jiterable
-    
+
     def __iter__(self):
         return Iterator(self.java_iterable.iterator())
-            
+
+
 def iterable(java_iterable):
-            
     return IterableWrapper(java_iterable)
-    
+
+
 def to_map(d):
     result = Maps.newHashMap()
     for (k, v) in d.iteritems():
@@ -49,6 +52,7 @@ def to_dict(m):
     return result
     #return {key: m.get(key) for key in iterable(m.keySet())}
 
+
 def box_number(item):
     """Boxes a Python number as a Java number object"""
 
@@ -61,13 +65,6 @@ def box_number(item):
         value = item
     return value
 
-
-def to_java_set(s):
-    result = Sets.newHashSet()
-    for item in s:
-        result.add(box_number(item))
-
-    return result
 
 def to_file_url(path):
     """
@@ -85,6 +82,14 @@ def to_file_url(path):
     """
 
     return File(path).toURI().toURL()
+
+def to_java_set(s):
+    result = Sets.newHashSet()
+    for item in s:
+        result.add(box_number(item))
+
+    return result
+
 
 
 def asclass(cls_name, o):

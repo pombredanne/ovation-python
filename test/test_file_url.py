@@ -1,7 +1,7 @@
 from nose.tools import istest, assert_equals
 
 from ovation import File
-from conversion import to_file_url
+from ovation.conversion import to_file_url
 
 
 @istest
