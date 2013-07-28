@@ -11,7 +11,7 @@ The Ovation Python API wraps the Ovation Java API for use by CPython. Through th
 
 Jython users can access the Ovation Java API directly and should *not* use this Python API."""
     
-VERSION = "2.0-beta2"
+VERSION = "2.0.0-beta.3"
 
 JARS = "ovation/jars"
 
