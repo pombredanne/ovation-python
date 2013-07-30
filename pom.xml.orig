@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>us.physion</groupId>
+	<artifactId>ovation-python</artifactId>
+<<<<<<< HEAD
+	<version>2.0.0-beta5</version>
+=======
+	<version>2.0.0-beta.4</version>
+>>>>>>> 7355b154610976019385d7dbe796367240e45d67
+	<packaging>pom</packaging>
+
+	<name>ovation-python</name>
+	<url>http://ovation.io</url>
+	<inceptionYear>2010</inceptionYear>
+  
+	<organization>
+		<name>Physion Consulting LLC</name>
+		<url>http://www.physionconsulting.com</url>
+	</organization>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2.1</version>
+				<executions>
+					<execution>
+						<configuration>
+							<executable>src/main/bin/build_wrapper.sh</executable>
+							<workingDirectory>${project.build.directory}/python</workingDirectory>
+							<arguments>
+								<argument>${project.version}</argument>
+							</arguments>
+							<environmentVariables>
+							</environmentVariables>
+						</configuration>
+						<id>jcc-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		
+
+		<extensions>  
+			<extension>
+				<groupId>org.springframework.build</groupId>
+				<artifactId>aws-maven</artifactId>
+				<version>4.4.0.RELEASE</version>
+			</extension>
+		</extensions>  
+	</build>
+	
+	<repositories>
+		<repository>
+			<id>s3-release-repository</id>
+			<name>S3 Release Repository</name>
+			<url>s3://us.physion.maven/release</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>s3-snapshot-repository</id>
+			<name>S3 Snapshot Repository</name>
+			<url>s3://us.physion.maven/snapshot</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	<dependencies>
+		<dependency>
+			<groupId>us.physion</groupId>
+			<artifactId>ovation-api</artifactId>
+			<version>2.0.0-beta.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>us.physion</groupId>
+			<artifactId>ovation-test-utils</artifactId>
+			<version>2.0.0-beta.4</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>us.physion</groupId>
+			<artifactId>ovation-logging</artifactId>
+			<version>2.0.0-beta.4</version>
+		</dependency>
+		
+	</dependencies>
+</project>
