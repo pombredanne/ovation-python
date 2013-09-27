@@ -69,7 +69,7 @@
 				<enabled>false</enabled>
 			</snapshots>
         </repository>
-        <snapshotRepository>
+        <repository>
             <id>s3-ovation-snapshot-repository</id>
             <name>AWS Snapshot Repository</name>
             <url>s3://maven.ovation.io/snapshot</url>
@@ -79,7 +79,7 @@
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
-        </snapshotRepository>
+        </repositories>
 	</repositories>
 	
 	<dependencies>
